@@ -61,7 +61,7 @@ outbound：
 - [1.4 Create an Amazon Machine Image (AMI)](#1.4)
 - [1.5 Configure a Second Availability Zone.](#1.5)
 - [1.6 Create an Application Load Balancer.](#1.6)
-- [1.7 ](#1.7)
+- [1.7 Create an Auto Scaling Group.](#1.7)
 
 
 ------------------------------------------------------------

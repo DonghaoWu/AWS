@@ -284,7 +284,7 @@ $ exit
     1. __`VPC`__：在目标 VPC 内创建 LB。
     2. __`AZ`__：在目标 AZ 内创建 LB。
     3. __`subnet`__：在目标 subnet 之间创建 LB 作为桥梁。
-    4. __`Security Group`__：EC2，LB， ASG 都使用 SG。
+    4. __`Security Group`__：EC2，LB，ASG 都使用 SG。
     5. __`Target Group`__：这个主要定义`进入 LB 的 traffic 向哪个目标发送`（这里应该目标是 ASG，但在这一步不设置，看第7步），同时这里设置`服务器健康检测`。
 
 <p align="center">

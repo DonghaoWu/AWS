@@ -305,7 +305,7 @@ $ exit
 4. 5月6日，target groups 的解释不够好。 
 
 <p align="center">
-    <img src="../assets/a13.png" width=70%>
+    <img src="../assets/a13.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------
@@ -347,7 +347,7 @@ $ exit
 2. You will configure the Launch Configuration to use the AMI that you created earlier. It contains a copy of the software that you installed on the Configuration Server.
 
 <p align="center">
-    <img src="../assets/a14.png" width=70%>
+    <img src="../assets/a14.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------
@@ -357,5 +357,5 @@ $ exit
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 <p align="center">
-    <img src="../assets/a15.png" width=70%>
+    <img src="../assets/a15.png" width=50%>
 </p>

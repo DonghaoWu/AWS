@@ -121,7 +121,7 @@ outbound：
 5. EC2 是没有 `Route Table` 的，它只能从所属 Subnet 那里直接继承下来，这样隐性的 `Route Table` 和 显式的 `Security Group` 构成了 EC2 的对外通讯规则。
 
 <p align="center">
-    <img src="../assets/a11.png" width=50%>
+    <img src="../assets/a11.png" width=60%>
 </p>
 
 ------------------------------------------------------------
@@ -269,7 +269,7 @@ $ exit
 ```
 
 <p align="center">
-    <img src="../assets/a12.png" width=50%>
+    <img src="../assets/a12.png" width=60%>
 </p>
 
 ------------------------------------------------------------------------
@@ -303,7 +303,7 @@ $ exit
 4. 5月6日，target groups 的解释不够好。 
 
 <p align="center">
-    <img src="../assets/a13.png" width=50%>
+    <img src="../assets/a13.png" width=40%>
 </p>
 
 ------------------------------------------------------------------------
@@ -366,7 +366,7 @@ $ exit
 ```
 
 <p align="center">
-    <img src="../assets/a14.png" width=50%>
+    <img src="../assets/a14.png" width=60%>
 </p>
 
 ------------------------------------------------------------------------
@@ -376,5 +376,5 @@ $ exit
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 <p align="center">
-    <img src="../assets/a15.png" width=50%>
+    <img src="../assets/a15.png" width=60%>
 </p>

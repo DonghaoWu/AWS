@@ -121,12 +121,10 @@ outbound：
 5. EC2 是没有 `Route Table` 的，它只能从所属 Subnet 那里直接继承下来，这样隐性的 `Route Table` 和 显式的 `Security Group` 构成了 EC2 的对外通讯规则。
 
 <p align="center">
-    <img src="../assets/a11.png" width=70%>
+    <img src="../assets/a11.png" width=60%>
 </p>
 
 ------------------------------------------------------------
-
-
 
 ### <span id="1.2">`Step2: Using SSH to Connect(Mac).`</span>
 

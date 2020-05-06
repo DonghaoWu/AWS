@@ -34,9 +34,9 @@ outbound：
 
 6. NAT gateway 必须是在 `public subnet CIDR` 内。
 
-7. Load Balancer 建议架设在 VPC 的 `public subnet 之间。`
+7. Load Balancer 建议架设在 VPC 的 `public subnet 之间，且最好是不同 AZ 的 public subnet。`
 
-8. Auto scaling group 建议应用在 VPC 内`处于 private subnet 的 EC2。`
+8. Auto scaling group 建议应用在 VPC 内`处于 private subnet 的 EC2，且最好是不同 AZ 的 private subnet。`
 
 9. Load Balancer is a critical component of a Highly Available architecture because it `performs health checks on instances and only sends requests to healthy instances.`(除了平均分配之外，更重要的是服务器健康监测。)
 
@@ -58,7 +58,7 @@ outbound：
 - [1.1 Inspect Your environment.](#1.1)
 - [1.2 Using SSH to Connect(Mac).](#1.2)
 - [1.3 Download, Install, and Launch Your Web Server's PHP Application.](#1.3)
-- [1.4 Create an Amazon Machine Image (AMI)](#1.4)
+- [1.4 Create an Amazon Machine Image (AMI).](#1.4)
 - [1.5 Configure a Second Availability Zone.](#1.5)
 - [1.6 Create an Application Load Balancer.](#1.6)
 - [1.7 Create an Auto Scaling Group.](#1.7)
@@ -293,12 +293,12 @@ $ exit
 
 2. 创建 `An Auto Scaling Group`:
 
-    - 关于 Launch configuration 的设置：
+    - 关于 `Launch configuration` 的设置：
         1. __`AMI`__：选择自定义的 AMI 或者系统默认 AMI。
         2. __`Storage`__：AMI 需要的储存空间。
         3. __`Security Group`__：EC2，LB，ASG 都使用 SG。
 
-    - 关于 创建 的设置：
+    - 关于 `Creating Auto Scaling Group` 的设置：
         1. __`Group Size`__：起始 instance 数目。
         2. __`Network`__：对应的 VPC。
         3. __`Subnet`__：ASG 架设的 private subnets。

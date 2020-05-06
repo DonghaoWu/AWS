@@ -52,7 +52,7 @@ outbound：
 ```
 
 <p align="center">
-    <img src="../assets/a10.png" width=70%>
+    <img src="../assets/a10.png" width=80%>
 </p>
 
 ------------------------------------------------------------
@@ -121,7 +121,7 @@ outbound：
 5. EC2 是没有 `Route Table` 的，它只能从所属 Subnet 那里直接继承下来，这样隐性的 `Route Table` 和 显式的 `Security Group` 构成了 EC2 的对外通讯规则。
 
 <p align="center">
-    <img src="../assets/a11.png" width=60%>
+    <img src="../assets/a11.png" width=50%>
 </p>
 
 ------------------------------------------------------------
@@ -168,7 +168,7 @@ $ exit
     - Amazon Machine Image (AMI): An AMI is `a copy of the disk volumes attached to an Amazon EC2 instance`. When a new instance is launched from an AMI, the disk volumes will contain exactly the same data as the original instance.
 
 <p align="center">
-    <img src="../assets/a1.png" width=90%>
+    <img src="../assets/a1.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------
@@ -203,7 +203,7 @@ $ exit
     4. __`Route Table`__：必须有一条 `Destination：0.0.0.0/0，target：igw-00ea57db0b42a0107`
 
 <p align="center">
-    <img src="../assets/a2.png" width=90%>
+    <img src="../assets/a2.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------
@@ -226,7 +226,7 @@ $ exit
     2. __`EIP`__：An Elastic IP Address (EIP) is a static IP address that will be associated with this NAT Gateway. The Elastic IP address will `remain unchanged `over the life of the NAT Gateway.
 
 <p align="center">
-    <img src="../assets/a3.png" width=90%>
+    <img src="../assets/a3.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------
@@ -234,13 +234,13 @@ $ exit
 4. 创建 `A second private Route Table`
 
 <p align="center">
-    <img src="../assets/a4.png" width=90%>
+    <img src="../assets/a4.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a5.png" width=90%>
+    <img src="../assets/a5.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------
@@ -269,7 +269,7 @@ $ exit
 ```
 
 <p align="center">
-    <img src="../assets/a12.png" width=70%>
+    <img src="../assets/a12.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------
@@ -288,7 +288,7 @@ $ exit
     5. __`Target Group`__：这个主要定义`进入 LB 的 traffic 向哪个目标发送`（这里应该目标是 ASG，但在这一步不设置，看第7步），同时这里设置`服务器健康检测`。
 
 <p align="center">
-    <img src="../assets/a6.png" width=90%>
+    <img src="../assets/a6.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------
@@ -333,7 +333,7 @@ $ exit
         7. __`Configure Tags`__：Tags placed on the Auto Scaling group can also automatically propagate to the instances launched by Auto Scaling.
 
 <p align="center">
-    <img src="../assets/a7.png" width=90%>
+    <img src="../assets/a7.png" width=80%>
 </p>
 
 ------------------------------------------------------------------------

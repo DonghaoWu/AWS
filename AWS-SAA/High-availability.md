@@ -15,7 +15,9 @@
 
 2. To build a highly available application, `it is a best practice to launch resources in multiple Availability Zones`.
 
-3. 本章设置的地址池：
+3. Creating an Auto Scaling group that deploys Amazon EC2 instances across your Private Subnets is best practice security for deploying applications because instances in a private subnet cannot be accessed from the Internet.
+
+4. 本章设置的地址池：
 
     - VPC：`10.200.0.0/20`
     - Public subnet 1: `10.200.0.0/24`
@@ -23,14 +25,22 @@
     - Public subnet 2: `10.200.1.0/24`
     - Private subnet 2: `10.200.4.0/23`
 
-4. 数据流管道：
+5. 数据流管道：
 
 outbound：
 ```diff
 + EC2 -> Private subnet + Route Table -> NAT gateway -> Public subnet + Route Table -> Internet Gateway 
 ```
 
-5. NAT gateway 必须是在 `public subnet CIDR` 内。
+6. NAT gateway 必须是在 `public subnet CIDR` 内。
+
+7. Load Balancer 建议架设在 VPC 的 `public subnet 之间。`
+
+8. Auto scaling group 建议应用在 VPC 内`处于 private subnet 的 EC2。`
+
+9. Load Balancer is a critical component of a Highly Available architecture because it `performs health checks on instances and only sends requests to healthy instances.`(除了平均分配之外，更重要的是服务器健康监测。)
+
+10. Auto Scaling is a service designed to launch or terminate Amazon EC2 instances automatically based on user-defined policies, schedules, and health checks. It also `automatically distributes instances across multiple Availability Zones` to make applications Highly Available.
 
 - 设计 HA 整体的步骤是：
 
@@ -250,68 +260,86 @@ $ exit
 
 - #### Click here: [BACK TO CONTENT](#1.0)
 
-```js
-const fs = require("fs");
-const superagent = require("superagent");
+1. 创建 `An Application Load Balancer`:
 
-const readFilePro = file => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(file, (err, data) => {
-            if (err) reject({ message: 'I could not find the file.' });
-            resolve(data);
-        })
-    })
-}
+    这里主要设计以下几个设置：
+    1. __`VPC`__：在目标 VPC 内创建 LB。
+    2. __`AZ`__：在目标 AZ 内创建 LB。
+    3. __`subnet`__：在目标 subnet 之间创建 LB 作为桥梁。
+    4. __`Security Group`__：EC2，LB， ASG 都使用 SG。
+    5. __`Target Group`__：这个主要定义`进入 LB 的 traffic 向哪个目标发送`（这里应该目标是 ASG，但在这一步不设置，看第7步），同时这里设置`服务器健康检测`。
 
-const writeFilePro = (file, data) => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(file, data, err => {
-            if (err) reject({ message: 'I could not write the file.' });
-            resolve('success');
-        })
-    })
-}
+<p align="center">
+    <img src="../assets/a6.png" width=90%>
+</p>
 
-const example3 = async () => {
-    try {
-        // stop the code here and wait for the promise finish. stop ... until
-        const data = await readFilePro(`${__dirname}/dog.txt`); //await 后面跟 promise，之后的代码相当于从这里开始进入了 promise 链。
-        console.log(`Breed:${data}`);
-        const res = await superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
-        console.log(res.body.message);
-        await writeFilePro('dog-img.txt', res.body.message);
-        console.log('Random dog image saved to file!');
-    } catch (error) {
-        console.log(error.message);
-    }
-};
-
-example3();
-```
+------------------------------------------------------------------------
 
 #### `Comment:`
-1. 第一个必须注明的是，这只是一种新的形式去处理`async action/ promise`。`example3`写法更好理解和维护，但是后台执行的原理跟`example1`和`example2`一模一样。其实这里使用的还是处理 promise 的方法，只是形式改变了，底下执行的原理跟原生 promise 一样。
+1. This is a critical component of a Highly Available architecture because the Load Balancer performs health checks on instances and only sends requests to healthy instances.
 
-2. 使用 `async` 定义的函数，表示里面可以使用关键词`await`和`try catch`。
-3. 目前从代码上面看，`await` 后面是必须跟一个 `promise`的，所以必须要把异步函数先`promise`化。`await`的意思是等待这个`promise`成功完成，有返回值的话就赋值，`且之后的所有语句都进入 promise 链条。`
-4. 可以看出，在异步模式下加上`async`和`await`就可以使`promise`返回一个值，不过这个异步模式的赋值不能用在同步模式的执行上，因为执行模式不一样，所以跟同步函数的运行和思考模式不一样。操作模式不一样，对应的结果也难互相使用，当然同步函数的值可以使用在异步函数中。
+2. 在设置 LB 的时候需要关注的一个点是：`LB 连接的所有 subnet 的 Route Table 是否都有连接 Internet Gateway。`如果没有的话那个 subnet 是不会连接到 Internet，这样 LB 也不会对那个 subnet 分配 traffic。
 
-5. 目前为止，提到几个比较容易混淆的单词：同步函数，异步函数，同步模式，异步模式，同步动作，异步动作，同步输出，异步输出。后面需要继续解释，理清概念边界。（4月20日）
+3. Target Groups define where to `send traffic` that comes into the Load Balancer. The Application Load Balancer can send traffic to multiple Target Groups based upon the URL of the incoming request.
 
-6. 总的来说，`async function` 加上`Promise`生成`promise`，`promise`使用`async`定义并内部调用是一种简化的`处理 promise`的方式。还是那句话，没有`async`定义并调用，`promise`也可以使用旧方式处理。
+4. 5月6日，target groups 的解释不够好。 
 
-### <span id="7.7">`Step7: More about async function.`</span>
 
-- #### Click here: [BACK TO CONTENT](#7.0)
-- #### Click here: [Part8: Async-Research (doc)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(doc).md)
+### <span id="1.7">`Step7: Create an Auto Scaling Group.`</span>
 
-- #### Click here: [Part9: Async-Research (code)](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/Async/Async-Research(code).md)
+- #### Click here: [BACK TO CONTENT](#1.0)
+
+1. 做这一步之前先确定 `AMI` 是否已经建立成功.
+
+2. 创建 `An Auto Scaling Group`:
+
+    - 关于 Launch configuration 的设置：
+        1. __`AMI`__：选择自定义的 AMI 或者系统默认 AMI。
+        2. __`Storage`__：AMI 需要的储存空间。
+        3. __`Security Group`__：EC2，LB，ASG 都使用 SG。
+
+    - 关于 创建 的设置：
+        1. __`Group Size`__：起始 instance 数目。
+        2. __`Network`__：对应的 VPC。
+        3. __`Subnet`__：ASG 架设的 private subnets。
+        4. __`Load Balancer`__：对接的在 `public subnet` 的 Load Balancer。
+        5. __`Target Groups`__：对应 LB 的 TG。
+        6. __`Keep this group at its initial size`__：保证 instance 的最低数量。
+        7. __`Configure Tags`__：Tags placed on the Auto Scaling group can also automatically propagate to the instances launched by Auto Scaling.
+
+<p align="center">
+    <img src="../assets/a7.png" width=90%>
+</p>
+
 
 #### `Comment:`
-1. 4月20日，目前来看，一个函数里面如果有 `async function`或者`promise`,那么整个函数就是 `async fucntion`，Node 会使用异步方式执行整个函数。（这个观点是不正确的，async 里面的同步动作还是会直接执行的，4月28日。）
-2. 使用 `async` 定义的函数，返回值一定是一个`promise`，所以可以跟着用 .then 和 .catch。
+1. A Launch Configuration defines what type of instances should be launched by Auto Scaling. The interface looks similar to launching an Amazon `EC2` instance, but `rather than launching an instance it stores the configuration for later use.`
 
-3. 待补充材料：`throw` & `promise.all`
+2. You will configure the Launch Configuration to use the AMI that you created earlier. It contains a copy of the software that you installed on the Configuration Server.
 
-- #### Click here: [BACK TO CONTENT](#7.0)
+<p align="center">
+    <img src="../assets/a10.png" width=90%>
+</p>
+
+<p align="center">
+    <img src="../assets/a11.png" width=90%>
+</p>
+
+<p align="center">
+    <img src="../assets/a12.png" width=90%>
+</p>
+
+<p align="center">
+    <img src="../assets/a13.png" width=90%>
+</p>
+
+<p align="center">
+    <img src="../assets/a14.png" width=90%>
+</p>
+
+<p align="center">
+    <img src="../assets/a15.png" width=90%>
+</p>
+
+- #### Click here: [BACK TO CONTENT](#1.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)

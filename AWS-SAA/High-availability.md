@@ -344,6 +344,27 @@ $ exit
 
 2. You will configure the Launch Configuration to use the AMI that you created earlier. It contains a copy of the software that you installed on the Configuration Server.
 
+3. 小结：
+
+```diff
++ Load Balancer:
+    - VPC
+    - AZ
+    - subnet
+    - Security Group
+    - Target Group
+
++ Auto Scaling group:
+    - AMI
+    - Storage
+    - Security Group
+    - VPC
+    - Subnet
+    - Load Balancer
+    - Target Groups
+    - Configure Tags
+```
+
 <p align="center">
     <img src="../assets/a14.png" width=50%>
 </p>

@@ -303,7 +303,7 @@ $ exit
 4. 5月6日，target groups 的解释不够好。 
 
 <p align="center">
-    <img src="../assets/a13.png" width=40%>
+    <img src="../assets/a13.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------

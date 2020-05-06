@@ -1,6 +1,6 @@
 # AWS solution architect (Part 1)
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 ## `Section: Making Your Environment Highly Available`
 
@@ -53,7 +53,7 @@ outbound：
 
 ### <span id="1.0">`Brief Contents & codes position`</span>
 
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 - [1.1 Inspect Your environment.](#1.1)
 - [1.2 Using SSH to Connect(Mac).](#1.2)
@@ -342,4 +342,4 @@ $ exit
 </p>
 
 - #### Click here: [BACK TO CONTENT](#1.0)
-- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/WebDev-tools-demo/blob/master/README.md)
+- #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)

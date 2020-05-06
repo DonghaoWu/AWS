@@ -51,6 +51,12 @@ outbound：
 + Auto Scaling Group
 ```
 
+<p align="center">
+    <img src="../assets/a10.png" width=70%>
+</p>
+
+------------------------------------------------------------
+
 ### <span id="1.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
@@ -113,6 +119,14 @@ outbound：
 4. 判断 EC2 跟 Subnet 的关系可以通过 VPC 地址从属关系看出。
 
 5. EC2 是没有 `Route Table` 的，它只能从所属 Subnet 那里直接继承下来，这样隐性的 `Route Table` 和 显式的 `Security Group` 构成了 EC2 的对外通讯规则。
+
+<p align="center">
+    <img src="../assets/a11.png" width=70%>
+</p>
+
+------------------------------------------------------------
+
+
 
 ### <span id="1.2">`Step2: Using SSH to Connect(Mac).`</span>
 
@@ -256,6 +270,12 @@ $ exit
     - EIP
 ```
 
+<p align="center">
+    <img src="../assets/a12.png" width=70%>
+</p>
+
+------------------------------------------------------------------------
+
 ### <span id="1.6">`Step6: Create an Application Load Balancer.`</span>
 
 - #### Click here: [BACK TO CONTENT](#1.0)
@@ -284,6 +304,13 @@ $ exit
 
 4. 5月6日，target groups 的解释不够好。 
 
+<p align="center">
+    <img src="../assets/a13.png" width=70%>
+</p>
+
+------------------------------------------------------------------------
+
+
 
 ### <span id="1.7">`Step7: Create an Auto Scaling Group.`</span>
 
@@ -311,6 +338,8 @@ $ exit
     <img src="../assets/a7.png" width=90%>
 </p>
 
+------------------------------------------------------------------------
+
 
 #### `Comment:`
 1. A Launch Configuration defines what type of instances should be launched by Auto Scaling. The interface looks similar to launching an Amazon `EC2` instance, but `rather than launching an instance it stores the configuration for later use.`
@@ -318,28 +347,15 @@ $ exit
 2. You will configure the Launch Configuration to use the AMI that you created earlier. It contains a copy of the software that you installed on the Configuration Server.
 
 <p align="center">
-    <img src="../assets/a10.png" width=90%>
+    <img src="../assets/a14.png" width=70%>
 </p>
 
-<p align="center">
-    <img src="../assets/a11.png" width=90%>
-</p>
+------------------------------------------------------------------------
 
-<p align="center">
-    <img src="../assets/a12.png" width=90%>
-</p>
-
-<p align="center">
-    <img src="../assets/a13.png" width=90%>
-</p>
-
-<p align="center">
-    <img src="../assets/a14.png" width=90%>
-</p>
-
-<p align="center">
-    <img src="../assets/a15.png" width=90%>
-</p>
 
 - #### Click here: [BACK TO CONTENT](#1.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
+
+<p align="center">
+    <img src="../assets/a15.png" width=70%>
+</p>

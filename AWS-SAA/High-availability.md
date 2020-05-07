@@ -42,6 +42,11 @@ outbound：
 
 10. Auto Scaling is a service designed to launch or terminate Amazon EC2 instances automatically based on user-defined policies, schedules, and health checks. It also `automatically distributes instances across multiple Availability Zones` to make applications Highly Available.
 
+11. 各部件接口对象：
+    - Load Balancer: `Public Subnet`
+    - Auto Scaling: `Private Subnet`
+    - NAT gateway: `Private Subnet`
+
 - 设计 HA 整体的步骤是：
 
 ```diff

@@ -47,6 +47,8 @@ outbound：
     - Auto Scaling: `Private Subnet`
     - NAT gateway: `Private Subnet`
 
+12. 问题：为什么 ASG 设置中要设置对应的 Load Balancer？
+
 - 设计 HA 整体的步骤是：
 
 ```diff

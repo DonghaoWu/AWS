@@ -200,30 +200,34 @@ def lambda_handler(event, context):
 ------------------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. 如上图修改 `Desired capacity` 之后 ASG 就会自动启动一个新的 EC2。
 
 ### <span id="2.6">`Step6: Result.`</span>
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
+1. Lambda Function code.
 <p align="center">
-    <img src="../assets/a28.png" width=85%>
+    <img src="../assets/a28.png" width=90%>
 </p>
 
 ------------------------------------------------------------------------
 
+2. `The new EC2 has a new tag from Lambda Function.`
 <p align="center">
     <img src="../assets/a29.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
+3. Two new snapshots created at a same time.
 <p align="center">
     <img src="../assets/a30.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
+4. 查看原来的 EC2 附带的 Volumes，上面一共有两个，说明 Lambda 运行成功。
 <p align="center">
     <img src="../assets/a31.png" width=85%>
 </p>
@@ -239,5 +243,5 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 <p align="center">
-    <img src="../assets/a17.png" width=85%>
+    <img src="../assets/a18.png" width=85%>
 </p>

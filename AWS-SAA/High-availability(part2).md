@@ -33,7 +33,7 @@
 + ASG add new EC2 -> SNS topic -> Trigger Lambda function -> Create EBS snapshot  + Send info to CloudWatch
 ```
 
-3. 在实验过程中有一个疑惑的地方，就是 Lambda 生成了一个 snapshot ，但是有两个新的 volume 。
+3. 在实验过程中有一个疑惑的地方，就是 Lambda 生成了一个 snapshot ，但是有两个新的 volume 。（5月8日更正，原本有2个 volume，生成后也有两个 snapshot。）
 
 - 设计 HA 整体的步骤是：
 

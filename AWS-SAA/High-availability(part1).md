@@ -2,7 +2,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-## `Section: Making Your Environment Highly Available`
+## `Section: Making Your Environment Highly Available - part1`
 
 ### `Summary`: In this documentation, we learn Making Your Environment Highly Available.
 

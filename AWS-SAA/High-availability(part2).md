@@ -4,7 +4,7 @@
 
 ## `Section: Making Your Environment Highly Available - part2`
 
-### `Summary`: In this documentation, we learn using Notifications to Trigger AWS Lambda.
+### `Summary`: In this documentation, we learn using notifications to trigger AWS Lambda.
 
 ### `Check Dependencies:`
 
@@ -16,13 +16,13 @@
 - 整体规划图：
 
 <p align="center">
-    <img src="../assets/a16.png" width=60%>
+    <img src="../assets/a16.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a17.png" width=60%>
+    <img src="../assets/a17.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -64,7 +64,7 @@
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a18.png" width=60%>
+    <img src="../assets/a18.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -77,7 +77,7 @@
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a19.png" width=60%>
+    <img src="../assets/a19.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -87,7 +87,7 @@
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a20.png" width=60%>
+    <img src="../assets/a20.png" width=85%>
 </p>
 
 ------------------------------------------------------------
@@ -101,31 +101,31 @@
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a21.png" width=60%>
+    <img src="../assets/a21.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a22.png" width=60%>
+    <img src="../assets/a22.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a23.png" width=60%>
+    <img src="../assets/a23.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a24.png" width=60%>
+    <img src="../assets/a24.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a25.png" width=60%>
+    <img src="../assets/a25.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
@@ -182,13 +182,13 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a26.png" width=60%>
+    <img src="../assets/a26.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a27.png" width=60%>
+    <img src="../assets/a27.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
@@ -201,25 +201,25 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a28.png" width=60%>
+    <img src="../assets/a28.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a29.png" width=60%>
+    <img src="../assets/a29.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a30.png" width=60%>
+    <img src="../assets/a30.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a31.png" width=60%>
+    <img src="../assets/a31.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
@@ -233,5 +233,5 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 <p align="center">
-    <img src="../assets/a17.png" width=60%>
+    <img src="../assets/a17.png" width=85%>
 </p>

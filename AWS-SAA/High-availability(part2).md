@@ -70,7 +70,7 @@
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. 名词：SNS Topic
 
 ### <span id="2.2">`Step2: Configure Auto Scaling to Send Events.`</span>
 
@@ -81,6 +81,9 @@
 </p>
 
 ------------------------------------------------------------
+
+#### `Comment:`
+1. 
 
 ### <span id="2.3">`Step3: An IAM Role for the Lambda function.`</span>
 
@@ -93,31 +96,34 @@
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 
-
+1. 名词：IAM Role policy，这里设置的 `policy: SnapAndTagRole` 会应用在第四步 `Lambda role` 设置中。
 
 ### <span id="2.4">`Step4: Create a Lambda Function.`</span>
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
+1. Congigure Lambda function.
 <p align="center">
-    <img src="../assets/a21.png" width=85%>
+    <img src="../assets/a21.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------
 
+2. Add Lambda code.
 <p align="center">
     <img src="../assets/a22.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
+3. Add trigger (SNS topic)
 <p align="center">
     <img src="../assets/a23.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
+4. Finished set up.
 <p align="center">
     <img src="../assets/a24.png" width=85%>
 </p>

@@ -104,7 +104,7 @@
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a21.png" width=50%>
+    <img src="../assets/a21.png" width=40%>
 </p>
 
 ------------------------------------------------------------------------
@@ -209,7 +209,7 @@ def lambda_handler(event, context):
 
 1. Lambda Function code.
 <p align="center">
-    <img src="../assets/a28.png" width=90%>
+    <img src="../assets/a28.png" width=95%>
 </p>
 
 ------------------------------------------------------------------------
@@ -244,5 +244,5 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 <p align="center">
-    <img src="../assets/a18.png" width=85%>
+    <img src="../assets/a17.png" width=85%>
 </p>

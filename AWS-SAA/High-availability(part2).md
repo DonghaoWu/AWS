@@ -35,6 +35,8 @@
 
 3. 在实验过程中有一个疑惑的地方，就是 Lambda 生成了一个 snapshot ，但是有两个新的 volume 。（5月8日更正，原本有2个 volume，生成后也有两个 snapshot。）
 
+4. __`一个很重要的点，本章中生成新的 EC2 使用的是 ASG 服务，生成 EC2 对应的 snapshot 使用的是 Lambda 服务，SNS 服务负责调用 Lambda，Lambda 同时还调用了 CloudWatch，而 IAM 赋予 Lambda 权限。`__
+
 - 设计 HA 整体的步骤是：
 
 ```diff

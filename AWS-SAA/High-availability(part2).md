@@ -102,34 +102,34 @@
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
-1. Congigure Lambda function.
 <p align="center">
     <img src="../assets/a21.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------
 
-2. Add Lambda code.
+1. Congigure Lambda function.
 <p align="center">
     <img src="../assets/a22.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
-3. Add trigger (SNS topic)
+2. Add Lambda code.
 <p align="center">
     <img src="../assets/a23.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
-4. Finished set up.
+3. Add trigger (SNS topic)
 <p align="center">
     <img src="../assets/a24.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
+4. Finished set up.
 <p align="center">
     <img src="../assets/a25.png" width=85%>
 </p>

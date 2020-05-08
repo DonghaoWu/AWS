@@ -244,5 +244,5 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 <p align="center">
-    <img src="../assets/a17.png" width=85%>
+    <img src="../assets/a16.png" width=85%>
 </p>

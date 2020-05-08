@@ -40,6 +40,7 @@
 ```diff
 + ASG
 + SNS
++ IAM Role
 + Lambda
 + CloudWatch
 ```

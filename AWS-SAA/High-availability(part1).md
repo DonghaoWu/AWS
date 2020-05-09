@@ -47,7 +47,7 @@ outbound：
     - Auto Scaling: `Private Subnet`
     - NAT gateway: `Private Subnet`
 
-12. ***** 问题：为什么 ASG 设置中要设置对应的 Load Balancer？
+12. ***** 问题：为什么 ASG 设置中要设置对应的 Load Balancer？ 它们是怎样通过 Target group 连接起来的？
 
 - 设计 HA 整体的步骤是：
 
@@ -314,7 +314,9 @@ $ exit
 
 3. Target Groups define where to `send traffic` that comes into the Load Balancer. The Application Load Balancer can send traffic to multiple Target Groups based upon the URL of the incoming request.
 
-4. 5月6日，target groups 的解释不够好。 
+4. 5月6日，target groups 的解释不够好。
+
+5. 5月9日，target groups 的意思是指定进入 LB 的数据向哪个方向发送，这个 `Target group 可以是 Auto scaling group 或者其他。`
 
 <p align="center">
     <img src="../assets/a13.png" width=50%>
@@ -372,6 +374,7 @@ $ exit
     - AMI
     - Storage
     - Security Group
+
     - VPC
     - Subnet
     - Load Balancer

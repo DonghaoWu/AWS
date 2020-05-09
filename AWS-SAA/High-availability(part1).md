@@ -231,9 +231,9 @@ $ exit
     - 术语：
         - A NAT Gateway (Network Address Translation) is `provisioned into a public Subnet` and provides `outbound Internet connectivity` for resources in a `private Subnet`.
 
-    这里主要设计以下几个设置：
-    1. __`subnet`__：第一步中创建的 public subnet。
-    2. __`EIP`__：An Elastic IP Address (EIP) is a static IP address that will be associated with this NAT Gateway. The Elastic IP address will `remain unchanged `over the life of the NAT Gateway.
+    - 这里主要设计以下几个设置：
+        1. __`subnet`__：第一步中创建的 public subnet。
+        2. __`EIP`__：An Elastic IP Address (EIP) is a static IP address that will be associated with this NAT Gateway. The Elastic IP address will `remain unchanged `over the life of the NAT Gateway.
 
 ```diff
 + 这里的意思是设定好之后所有从 Private subnet 向外发出的数据都会经过处于 Public subnet 的指定 Nat gateway。

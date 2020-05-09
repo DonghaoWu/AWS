@@ -230,7 +230,10 @@ $ exit
 
     - 术语：
         - A NAT Gateway (Network Address Translation) is `provisioned into a public Subnet` and provides `outbound Internet connectivity` for resources in a `private Subnet`.
-        - __`这里的意思是设定好之后所有从 Private subnet 向外发出的数据都会经过处于 Public subnet 的指定 Nat gateway。`__
+
+```diff
++ 这里的意思是设定好之后所有从 Private subnet 向外发出的数据都会经过处于 Public subnet 的指定 Nat gateway。
+```
 
     这里主要设计以下几个设置：
     1. __`subnet`__：第一步中创建的 public subnet。

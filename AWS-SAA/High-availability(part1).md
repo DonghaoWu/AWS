@@ -47,7 +47,7 @@ outbound：
     - Auto Scaling: `Private Subnet`
     - NAT gateway: `Private Subnet`
 
-12. 问题：为什么 ASG 设置中要设置对应的 Load Balancer？
+12. ***** 问题：为什么 ASG 设置中要设置对应的 Load Balancer？
 
 - 设计 HA 整体的步骤是：
 
@@ -87,7 +87,7 @@ outbound：
 
     - IPv4 CIDR：10.200.0.0/20 - 10.200.15.255 。一共`4096`个地址（包含几个 aws 保留地址），这些地址都是只能够在 VPC 内部使用的，也是所谓的地址池。
 
-    - Route Table：这个是很多部件都有的。
+    - Route Table：这个是很多部件都有的。（目前有 VPC ，subnet）
 
     - Subnets：理解成把内部地址切割成小部分，这是 VPC 里面很重要的部件设定。
     - Availability Zone：每个 subnet 都要设定所属的 AZ。
@@ -145,6 +145,9 @@ $ cd ~/Downloads
 $ chmod 400 labsuser.pem
 $ ssh -i labsuser.pem ec2-user@<public-ip> ## Then type ’yes‘
 ```
+
+#### `Comment:`
+1. 这里的 <public-ip> 指的是 EC2 的 `IPv4 Public IP`.
 
 ### <span id="1.3">`Step3: Download, Install, and Launch Your Web Server's PHP Application`</span>
 
@@ -227,6 +230,7 @@ $ exit
 
     - 术语：
         - A NAT Gateway (Network Address Translation) is `provisioned into a public Subnet` and provides `outbound Internet connectivity` for resources in a `private Subnet`.
+        - __`这里的意思是设定好之后所有从 Private subnet 向外发出的数据都会经过处于 Public subnet 的指定 Nat gateway。`__
 
     这里主要设计以下几个设置：
     1. __`subnet`__：第一步中创建的 public subnet。
@@ -252,7 +256,7 @@ $ exit
 
 ------------------------------------------------------------------------
 
-##### 记得创建之后 `Edit subnet associations.`
+##### ***** 记得创建之后 `Edit subnet associations.`
 
 #### `Comment:`
 1. To build a highly available application, it is a best practice to launch resources in multiple Availability Zones.

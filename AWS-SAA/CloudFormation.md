@@ -42,60 +42,70 @@
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
+- Create stack.
 <p align="center">
     <img src="../assets/a33.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Upload a template file.
 <p align="center">
     <img src="../assets/a34.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Name the stack.
 <p align="center">
     <img src="../assets/a35.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Tag the resources in your stack.
 <p align="center">
     <img src="../assets/a36.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Review the configuration.
 <p align="center">
     <img src="../assets/a37.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Stack in creating in progress.
 <p align="center">
     <img src="../assets/a38.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Stack created complete. (stack info tag)
 <p align="center">
     <img src="../assets/a39.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Stack created complete. (event tag)
 <p align="center">
     <img src="../assets/a40.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Stack created complete. (Resources tag)
 <p align="center">
     <img src="../assets/a41.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Stack created complete. (Output tag)
 <p align="center">
     <img src="../assets/a42.png" width=85%>
 </p>

@@ -282,7 +282,8 @@ Outputs:
     Export:
       Name: !Sub '${AWS::StackName}-SubnetID'
 
-+ 2. Define stack name in AWS console: ./assets/a35.png
++ 2. Define stack name in AWS console: Stack name: lab-network
+    (./assets/a35.png)
 
 + 3. lab-application.yaml
   Parameters:
@@ -472,14 +473,14 @@ Outputs:
     <img src="../assets/a31.png" width=40%>
 </p>
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------
 
 1. Congigure Lambda function.
 <p align="center">
     <img src="../assets/a22.png" width=85%>
 </p>
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------
 
 
 #### `Comment:`
@@ -495,7 +496,7 @@ Outputs:
     <img src="../assets/a26.png" width=85%>
 </p>
 
-------------------------------------------------------------------------
+--------------------------------------------------------------------
 
 #### `Comment:`
 1. 
@@ -503,21 +504,7 @@ Outputs:
 
 
 
-
-### <span id="3.6">`Step6: Result.`</span>
-
-- #### Click here: [BACK TO CONTENT](#3.0)
-
-1. 
-
-#### `Comment:`
-1. 
-
-------------------------------------------------------------------------
+--------------------------------------------------------------------
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
-
-<p align="center">
-    <img src="../assets/a16.png" width=85%>
-</p>

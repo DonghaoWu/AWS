@@ -208,22 +208,199 @@ Outputs:
       Name: !Sub '${AWS::StackName}-SubnetID'
 ```
 
-### <span id="2.2">`Step2: Configure Auto Scaling to Send Events.`</span>
+### <span id="3.2">`Step2: Use AWS CloudFormation to deploy an application layer that references the networking layer.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#3.0)
+
+1. Same step as network layer but different CloudFormation template.
+
+2. 这个 layer 主要生成一个 SG 和一个 EC2。
 
 <p align="center">
-    <img src="../assets/a19.png" width=85%>
+    <img src="../assets/a43.png" width=85%>
 </p>
+
+----------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a44.png" width=85%>
+</p>
+
+----------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a45.png" width=85%>
+</p>
+
+----------------------------------------------------------
+
+3. A CloudFormation stack can also reference values from another CloudFormation stack. For example, here is a portion of the lab-application template that references the lab-network template:
+
+    ```yaml
+    WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Enable HTTP ingress
+        VpcId:
+        Fn::ImportValue:
+            !Sub ${NetworkStackName}-VPCID
+    ```
+
+    - The last line uses to the Network Stack Name that you provided ("lab-network") when the stack was created. It then imports the value of lab-network-VPCID from the Outputs of the first stack and inserts the value into the VPC ID field of the security group definition. `The result is that the security group is created in the VPC created by the first stack.`
+
+    - 这里的 `NetworkStackName` 需要参考代码里面的 `Parameters`。
+
+4. In another example, here is the code that places the Amazon EC2 instance into the correct subnet:
+
+    ```yaml
+    SubnetId:
+        Fn::ImportValue:
+        !Sub ${NetworkStackName}-SubnetID
+    ```
+
+    - It takes the Subnet ID from the lab-network stack and uses it in the lab-application stack to launch the instance into the public subnet that created by the first stack.
 
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. 对于这一步来说，最重要的是找出在这个代码中找出跟 network-layer 之间的衔接处。
+2. 具体来说，这段代码就是从 network-layer 获取 VPC ID 然后部署 SG，然后从 network-layer 获取 Subnet ID 然后部署 EC2。
 
-### <span id="2.3">`Step3: An IAM Role for the Lambda function.`</span>
+3. lab-application.yaml template:
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Application Template: Demonstrates how to reference resources from a different stack.
+  This template provisions an EC2 instance in a VPC Subnet provisioned in a different stack.
+
+# This template creates:
+#   Amazon EC2 instance
+#   Security Group
+
+######################
+# Parameters section
+######################
+
+Parameters:
+
+  NetworkStackName:
+    Description: >-
+      Name of an active CloudFormation stack that contains the networking
+      resources, such as the VPC and subnet that will be used in this stack.
+    Type: String
+    MinLength: 1
+    MaxLength: 255
+    AllowedPattern: '^[a-zA-Z][-a-zA-Z0-9]*$'
+    Default: lab-network
+
+  AmazonLinuxAMIID:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+
+######################
+# Resources section
+######################
+
+Resources:
+
+  WebServerInstance:
+    Type: AWS::EC2::Instance
+    Metadata:
+      'AWS::CloudFormation::Init':
+        configSets:
+          All:
+            - ConfigureSampleApp
+        ConfigureSampleApp:
+          packages:
+            yum:
+              httpd: []
+          files:
+            /var/www/html/index.html:
+              content: |
+                <img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation_graphic.png" alt="AWS CloudFormation Logo"/>
+                <h1>Congratulations, you have successfully launched the AWS CloudFormation sample.</h1>
+              mode: 000644
+              owner: apache
+              group: apache
+          services:
+            sysvinit:
+              httpd:
+                enabled: true
+                ensureRunning: true
+    Properties:
+      InstanceType: t2.micro
+      ImageId: !Ref AmazonLinuxAMIID
+      NetworkInterfaces:
+        - GroupSet:
+            - !Ref WebServerSecurityGroup
+          AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          DeleteOnTermination: true
+          SubnetId:
+            Fn::ImportValue:
+              !Sub ${NetworkStackName}-SubnetID
+      Tags:
+        - Key: Name
+          Value: Web Server
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          yum update -y aws-cfn-bootstrap
+          # Install the files and packages from the metadata
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource WebServerInstance --configsets All --region ${AWS::Region}
+          # Signal the status from cfn-init
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource WebServerInstance --region ${AWS::Region}
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT5M
+
+  DiskVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      Size: 100
+      AvailabilityZone: !GetAtt WebServerInstance.AvailabilityZone
+      Tags:
+        - Key: Name
+          Value: Web Data
+    DeletionPolicy: Snapshot
+
+  DiskMountPoint:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      InstanceId: !Ref WebServerInstance
+      VolumeId: !Ref DiskVolume
+      Device: /dev/sdh
+
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP ingress
+      VpcId:
+        Fn::ImportValue:
+          !Sub ${NetworkStackName}-VPCID
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: Web Server Security Group
+
+######################
+# Outputs section
+######################
+
+Outputs:
+  URL:
+    Description: URL of the sample website
+    Value: !Sub 'http://${WebServerInstance.PublicDnsName}'
+```
+
+### <span id="3.3">`Step3: An IAM Role for the Lambda function.`</span>
+
+- #### Click here: [BACK TO CONTENT](#3.0)
 
 <p align="center">
     <img src="../assets/a20.png" width=85%>

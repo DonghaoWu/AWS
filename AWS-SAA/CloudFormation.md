@@ -30,15 +30,15 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-- [3.1 Use AWS CloudFormation to deploy a VPC networking layer.](#3.1)
-- [3.2 Use AWS CloudFormation to deploy an application layer that references the networking layer.](#3.2)
-- [3.3 Explore templates with AWS CloudFormation Designer.](#3.3)
-- [3.4 Delete a stack that has a Deletion Policy.](#3.4)
-- [3.5 Result.](#3.5)
+- [3.1 Deploy a Networking Layer.](#3.1)
+- [3.2 Deploy an Application Layer.](#3.2)
+- [3.3 Update a Stack.](#3.3)
+- [3.4 Explore Templates with AWS CloudFormation Designer.](#3.4)
+- [3.5 Delete the Stack.](#3.5)
 
 ------------------------------------------------------------
 
-### <span id="3.1">`Step1: Use AWS CloudFormation to deploy a VPC networking layer.`</span>
+### <span id="3.1">`Step1: Deploy a Networking Layer.`</span>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
@@ -208,7 +208,7 @@ Outputs:
       Name: !Sub '${AWS::StackName}-SubnetID'
 ```
 
-### <span id="3.2">`Step2: Use AWS CloudFormation to deploy an application layer that references the networking layer.`</span>
+### <span id="3.2">`Step2: Deploy an Application Layer.`</span>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
@@ -265,6 +265,52 @@ Outputs:
 #### `Comment:`
 1. 对于这一步来说，最重要的是找出在这个代码中找出跟 network-layer 之间的衔接处。
 2. 具体来说，这段代码就是从 network-layer 获取 VPC ID 然后部署 SG，然后从 network-layer 获取 Subnet ID 然后部署 EC2。
+
+```diff
++ 1. lab-network.yaml
+  Outputs:
+  
+  VPC:
+    Description: VPC ID
+    Value: !Ref VPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPCID'
+  
+  PublicSubnet:
+    Description: The subnet ID to use for public web servers
+    Value: !Ref PublicSubnet
+    Export:
+      Name: !Sub '${AWS::StackName}-SubnetID'
+
++ 2. Define stack name in AWS console: ./assets/a35.png
+
++ 3. lab-application.yaml
+  Parameters:
+
+  NetworkStackName:
+    Description: >-
+      Name of an active CloudFormation stack that contains the networking
+      resources, such as the VPC and subnet that will be used in this stack.
+    Type: String
+    MinLength: 1
+    MaxLength: 255
+    AllowedPattern: '^[a-zA-Z][-a-zA-Z0-9]*$'
+    Default: lab-network
+
++ 4. lab-application.yaml
+    WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+        GroupDescription: Enable HTTP ingress
+        VpcId:
+        Fn::ImportValue:
+            !Sub ${NetworkStackName}-VPCID
+
++ 5. lab-application.yaml
+    SubnetId:
+        Fn::ImportValue:
+        !Sub ${NetworkStackName}-SubnetID          
+```
 
 3. lab-application.yaml template:
 
@@ -398,7 +444,7 @@ Outputs:
     Value: !Sub 'http://${WebServerInstance.PublicDnsName}'
 ```
 
-### <span id="3.3">`Step3: An IAM Role for the Lambda function.`</span>
+### <span id="3.3">`Step3: Update a Stack.`</span>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
@@ -409,14 +455,21 @@ Outputs:
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 名词：IAM Role policy，这里设置的 `policy: SnapAndTagRole` 会应用在第四步 `Lambda role` 设置中。
+1. 
 
-### <span id="2.4">`Step4: Create a Lambda Function.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+
+
+
+
+
+
+### <span id="3.4">`Step4: Explore Templates with AWS CloudFormation Designer.`</span>
+
+- #### Click here: [BACK TO CONTENT](#3.0)
 
 <p align="center">
-    <img src="../assets/a21.png" width=40%>
+    <img src="../assets/a31.png" width=40%>
 </p>
 
 ------------------------------------------------------------------------
@@ -428,77 +481,15 @@ Outputs:
 
 ------------------------------------------------------------------------
 
-2. Add Lambda code.
-<p align="center">
-    <img src="../assets/a23.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-3. Add trigger (SNS topic)
-<p align="center">
-    <img src="../assets/a24.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-4. Finished set up.
-<p align="center">
-    <img src="../assets/a25.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
 
 #### `Comment:`
-1. Lambda function code (runtime: python 2.7)
+1. 
 
-```py
-# Snap_and_Tag Lambda function
-#
-# This function is triggered when Auto Scaling launches a new instance.
-# A snapshot of EBS volumes will be created and a tag will be added.
 
-from __future__ import print_function
 
-import json, boto3
+### <span id="3.5">`Step5: Delete the Stack.`</span>
 
-def lambda_handler(event, context):
-    print("Received event: " + json.dumps(event, indent=2))
-
-    # Extract the EC2 instance ID from the Auto Scaling event notification
-    message = event['Records'][0]['Sns']['Message']
-    autoscalingInfo = json.loads(message)
-    ec2InstanceId = autoscalingInfo['EC2InstanceId']
-
-    # Snapshot all EBS volumes attached to the instance
-    ec2 = boto3.resource('ec2')
-    for v in ec2.volumes.filter(Filters=[{'Name': 'attachment.instance-id', 'Values': [ec2InstanceId]}]):
-        description = 'Autosnap-%s-%s' % ( ec2InstanceId, v.volume_id )
-
-        if v.create_snapshot(Description = description):
-            print("\t\tSnapshot created with description [%s]" % description)
-
-    # Add a tag to the EC2 instance: Key = Snapshots, Value = Created
-    ec2 = boto3.client('ec2')
-    response = ec2.create_tags(
-        Resources=[ec2InstanceId],
-        Tags=[{'Key': 'Snapshots', 'Value': 'Created'}]
-    )
-    print ("***Tag added to EC2 instance with id: " + ec2InstanceId)
-
-    # Finished!
-    return ec2InstanceId
-```
-
-2. Examine the code. It is performing the following steps:
-
-    - Extract the EC2 instance ID from the notification message
-    - Create a snapshot of all EBS volumes attached to the instance
-    - Add a tag to the instance to indicate that snapshots were created
-
-### <span id="2.5">`Step5: Scale-Out the Auto Scaling Group to Trigger the Lambda function.`</span>
-
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#3.0)
 
 <p align="center">
     <img src="../assets/a26.png" width=85%>
@@ -506,52 +497,18 @@ def lambda_handler(event, context):
 
 ------------------------------------------------------------------------
 
-<p align="center">
-    <img src="../assets/a27.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-<p align="center">
-    <img src="../assets/a32.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
 #### `Comment:`
-1. 如上图修改 `Desired capacity` 之后 ASG 就会自动启动一个新的 EC2。
+1. 
 
-### <span id="2.6">`Step6: Result.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
 
-1. Lambda Function code.
-<p align="center">
-    <img src="../assets/a28.png" width=95%>
-</p>
 
-------------------------------------------------------------------------
 
-2. `The new EC2 has a new tag from Lambda Function.`
-<p align="center">
-    <img src="../assets/a29.png" width=85%>
-</p>
+### <span id="3.6">`Step6: Result.`</span>
 
-------------------------------------------------------------------------
+- #### Click here: [BACK TO CONTENT](#3.0)
 
-3. Two new snapshots created at a same time.
-<p align="center">
-    <img src="../assets/a30.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-4. 查看原来的 EC2 附带的 Volumes，上面一共有两个，说明 Lambda 运行成功。
-<p align="center">
-    <img src="../assets/a31.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
+1. 
 
 #### `Comment:`
 1. 

@@ -666,50 +666,68 @@ Outputs:
     Value: !Sub 'http://${WebServerInstance.PublicDnsName}'
 ```
 
-
-
-
-
-
-
-
 ### <span id="3.4">`Step4: Explore Templates with AWS CloudFormation Designer.`</span>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
 <p align="center">
-    <img src="../assets/a31.png" width=40%>
+    <img src="../assets/a55.png" width=40%>
 </p>
 
 --------------------------------------------------------------------
 
-1. Congigure Lambda function.
 <p align="center">
-    <img src="../assets/a22.png" width=85%>
+    <img src="../assets/a56.png" width=40%>
 </p>
 
 --------------------------------------------------------------------
-
 
 #### `Comment:`
 1. 
-
 
 
 ### <span id="3.5">`Step5: Delete the Stack.`</span>
 
 - #### Click here: [BACK TO CONTENT](#3.0)
 
+- A Deletion Policy can also be specified against resources, which can preserve or (in some cases) backup a resource when its stack is deleted. This is useful for retaining databases, disk volumes or any resource that might be required after stack deletion.
+
+- DeletionPolicy in `lab-application.yaml`
+
+```yaml
+DiskVolume:
+  Type: AWS::EC2::Volume
+  Properties:
+    Size: 100
+    AvailabilityZone: !GetAtt WebServerInstance.AvailabilityZone
+    Tags:
+      - Key: Name
+        Value: Web Data
+  DeletionPolicy: Snapshot
+```
+
+--------------------------------------------------------------------
+
 <p align="center">
-    <img src="../assets/a26.png" width=85%>
+    <img src="../assets/a57.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a58.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a59.png" width=85%>
 </p>
 
 --------------------------------------------------------------------
 
 #### `Comment:`
 1. 
-
-
 
 
 --------------------------------------------------------------------

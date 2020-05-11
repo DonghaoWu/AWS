@@ -671,13 +671,13 @@ Outputs:
 - #### Click here: [BACK TO CONTENT](#3.0)
 
 <p align="center">
-    <img src="../assets/a55.png" width=40%>
+    <img src="../assets/a55.png" width=85%>
 </p>
 
 --------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/a56.png" width=40%>
+    <img src="../assets/a56.png" width=85%>
 </p>
 
 --------------------------------------------------------------------
@@ -722,6 +722,12 @@ DiskVolume:
 
 <p align="center">
     <img src="../assets/a59.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a60.png" width=85%>
 </p>
 
 --------------------------------------------------------------------

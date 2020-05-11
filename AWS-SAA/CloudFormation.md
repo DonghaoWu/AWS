@@ -24,6 +24,16 @@
 
 2. 这其中一个关键点是如何在 CloudFormation 中把 networking layer 和 application layer 自动串联连接。
 
+- 关键词：
+
+```diff
++ Stack name
++ ${AWS::StackName}
++ Parameters
++ NetworkStackName
++ ${NetworkStackName}
+```
+
 ------------------------------------------------------------
 
 ### <span id="3.0">`Brief Contents & codes position`</span>

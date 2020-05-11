@@ -708,24 +708,28 @@ DiskVolume:
 
 --------------------------------------------------------------------
 
+- Delete the stack.
 <p align="center">
     <img src="../assets/a57.png" width=85%>
 </p>
 
 --------------------------------------------------------------------
 
+- Delete in progress.
 <p align="center">
     <img src="../assets/a58.png" width=85%>
 </p>
 
 --------------------------------------------------------------------
 
+- Delete completed.
 <p align="center">
     <img src="../assets/a59.png" width=85%>
 </p>
 
 --------------------------------------------------------------------
 
+- A new snapshot is created.
 <p align="center">
     <img src="../assets/a60.png" width=85%>
 </p>
@@ -734,7 +738,6 @@ DiskVolume:
 
 #### `Comment:`
 1. 
-
 
 --------------------------------------------------------------------
 

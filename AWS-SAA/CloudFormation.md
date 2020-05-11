@@ -469,41 +469,49 @@ Outputs:
 
 ------------------------------------------------------------
 
+- Use a new template.
 <p align="center">
     <img src="../assets/a48.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Check the NetworkStackName.
 <p align="center">
     <img src="../assets/a49.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Check the tags.
 <p align="center">
     <img src="../assets/a50.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Check the change set preview.
 <p align="center">
     <img src="../assets/a51.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Update in progress.
 <p align="center">
     <img src="../assets/a52.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
+- Update comleted.
 <p align="center">
     <img src="../assets/a53.png" width=85%>
 </p>
 
 ------------------------------------------------------------
+
+- Check the updated EC2 security group inbound traffic rules tag.
 
 <p align="center">
     <img src="../assets/a54.png" width=85%>
@@ -512,8 +520,17 @@ Outputs:
 ------------------------------------------------------------
 
 #### `Comment:`
+1. lab-application2.yaml 相对于 lab-application.yaml 的修改：
+- 增加了：
 
-1. lab-application2.yaml template:
+```yaml
+- IpProtocol: tcp
+  FromPort: 22
+  ToPort: 22
+  CidrIp: 0.0.0.0/0
+```
+
+2. lab-application2.yaml template:
 
 ```yaml
 AWSTemplateFormatVersion: 2010-09-09

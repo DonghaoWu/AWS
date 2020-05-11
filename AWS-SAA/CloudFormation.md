@@ -28,9 +28,12 @@
 
 ```diff
 + Stack name
+
 + ${AWS::StackName}
+
 + Parameters
 + NetworkStackName
+
 + ${NetworkStackName}
 ```
 

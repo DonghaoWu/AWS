@@ -111,7 +111,7 @@
 
 ------------------------------------------------------------------------
 
-1. Congigure Lambda function.
+1. Configure Lambda function.
 <p align="center">
     <img src="../assets/a22.png" width=85%>
 </p>

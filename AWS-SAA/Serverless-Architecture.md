@@ -55,128 +55,115 @@
 
 ------------------------------------------------------------------------
 
-1. Congigure Lambda function.
+1. Configure Lambda function.
 <p align="center">
-    <img src="../assets/a22.png" width=85%>
+    <img src="../assets/a64.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 2. Add Lambda code.
 <p align="center">
-    <img src="../assets/a23.png" width=85%>
+    <img src="../assets/a65.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
-3. Add trigger (SNS topic)
+3. Basic settings.
 <p align="center">
-    <img src="../assets/a24.png" width=85%>
+    <img src="../assets/a66.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
-4. Finished set up.
+4. Add triggers.
 <p align="center">
-    <img src="../assets/a25.png" width=85%>
+    <img src="../assets/a67.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
+
+5. Finished set up.
+<p align="center">
+    <img src="../assets/a68.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
 #### `Comment:`
-1. lab-network.yaml template:
+1. Now whenever a file is uploaded to the selected Amazon S3 bucket, this Lambda function will execute. It will read the data from the uploaded file and will store the data it finds into the Customer and Transactions tables in DynamoDB.
 
-```yaml
-AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  Network Template: Sample template that creates a VPC with DNS and public IPs enabled.
+2. lambda-function1:
 
-# This template creates:
-#   VPC
-#   Internet Gateway
-#   Public Route Table
-#   Public Subnet
+```py
+# TransactionProcessor Lambda function
+#
+# This function is triggered by an object being created in an Amazon S3 bucket.
+# The file is downloaded and each line is inserted into DynamoDB tables.
 
-######################
-# Resources section
-######################
+from __future__ import print_function
+import json, urllib, boto3, csv
 
-Resources:
+# Connect to S3 and DynamoDB
+s3 = boto3.resource('s3')
+dynamodb = boto3.resource('dynamodb')
 
-  ## VPC
+# Connect to the DynamoDB tables
+customerTable     = dynamodb.Table('Customer');
+transactionsTable = dynamodb.Table('Transactions');
 
-  VPC:
-    Type: AWS::EC2::VPC
-    Properties:
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
-      CidrBlock: 10.0.0.0/16
-      
-  ## Internet Gateway
+# This handler is executed every time the Lambda function is triggered
+def lambda_handler(event, context):
 
-  InternetGateway:
-    Type: AWS::EC2::InternetGateway
-  
-  VPCGatewayAttachment:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      VpcId: !Ref VPC
-      InternetGatewayId: !Ref InternetGateway
-  
-  ## Public Route Table
+  # Show the incoming event in the debug log
+  print("Event received by Lambda function: " + json.dumps(event, indent=2))
 
-  PublicRouteTable:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref VPC
-  
-  PublicRoute:
-    Type: AWS::EC2::Route
-    DependsOn: VPCGatewayAttachment
-    Properties:
-      RouteTableId: !Ref PublicRouteTable
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId: !Ref InternetGateway
-  
-  ## Public Subnet
-  
-  PublicSubnet:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      CidrBlock: 10.0.0.0/24
-  
-  PublicSubnetRouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnet
-      RouteTableId: !Ref PublicRouteTable
-  
-  PublicSubnetNetworkAclAssociation:
-    Type: AWS::EC2::SubnetNetworkAclAssociation
-    Properties:
-      SubnetId: !Ref PublicSubnet
-      NetworkAclId: !GetAtt 
-        - VPC
-        - DefaultNetworkAcl
-  
-######################
-# Outputs section
-######################
+  # Get the bucket and object key from the Event
+  bucket = event['Records'][0]['s3']['bucket']['name']
+  key = urllib.unquote_plus(event['Records'][0]['s3']['object']['key']).decode('utf8')
+  localFilename = '/tmp/transactions.txt'
 
-Outputs:
-  
-  VPC:
-    Description: VPC ID
-    Value: !Ref VPC
-    Export:
-      Name: !Sub '${AWS::StackName}-VPCID'
-  
-  PublicSubnet:
-    Description: The subnet ID to use for public web servers
-    Value: !Ref PublicSubnet
-    Export:
-      Name: !Sub '${AWS::StackName}-SubnetID'
+  # Download the file from S3 to the local filesystem
+  try:
+    s3.meta.client.download_file(bucket, key, localFilename)
+  except Exception as e:
+    print(e)
+    print('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same region as this function.'.format(key, bucket))
+    raise e
+
+  # Read the Transactions CSV file. Delimiter is the '|' character
+  with open(localFilename) as csvfile:
+    reader = csv.DictReader(csvfile, delimiter='|')
+
+    # Read each row in the file
+    rowCount = 0
+    for row in reader:
+      rowCount += 1
+
+      # Show the row in the debug log
+      print(row['customer_id'], row['customer_address'], row['trn_id'], row['trn_date'], row['trn_amount'])
+
+      try:
+        # Insert Customer ID and Address into Customer DynamoDB table
+        customerTable.put_item(
+          Item={
+            'CustomerId': row['customer_id'],
+            'Address':  row['customer_address']})
+
+        # Insert transaction details into Transactions DynamoDB table
+        transactionsTable.put_item(
+          Item={
+            'CustomerId':    row['customer_id'],
+            'TransactionId':   row['trn_id'],
+            'TransactionDate':  row['trn_date'],
+            'TransactionAmount': int(row['trn_amount'])})
+
+      except Exception as e:
+         print(e)
+         print("Unable to insert data into DynamoDB table".format(e))
+
+    # Finished!
+    return "%d transactions inserted" % rowCount
 ```
 
 ### <span id="3.2">`Step2: Deploy an Application Layer.`</span>

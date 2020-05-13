@@ -221,6 +221,11 @@ def lambda_handler(event, context):
 
 ------------------------------------------------------------------------
 
+
+```diff
++ S3 new file uploaded -> Lambda TransactionProcessor -> DynamoDB table updated -> Lambda TotalNotifier
+```
+
 3. `TotalNotifier.py`:
 ```py
 # TotalNotifier Lambda function

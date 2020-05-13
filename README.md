@@ -4,4 +4,6 @@
 
 - [Part2 - Making Your Environment Highly Available - SNS + Lambda](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/High-availability(part2).md) 
 
-- [Part3 - Automating Infrastructure Deployment with AWS CloudFormation](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/CloudFormation.md) 
+- [Part3 - Automating Infrastructure Deployment with AWS CloudFormation](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/CloudFormation.md)
+
+- [Part4 - Implementing a Serverless Architecture with AWS Managed Services](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/CloudFormation.md)  

@@ -38,7 +38,7 @@
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 - [4.1 Create a Lambda Function to Process a Transactions File.](#4.1)
-- [4.2 Deploy an Application Layer.](#4.2)
+- [4.2  Create a Lambda Function to Calculate Transaction Totals and Notify About High Account Balances.](#4.2)
 - [4.3 Update a Stack.](#4.3)
 - [4.4 Explore Templates with AWS CloudFormation Designer.](#4.4)
 - [4.5 Delete the Stack.](#4.5)
@@ -166,241 +166,125 @@ def lambda_handler(event, context):
     return "%d transactions inserted" % rowCount
 ```
 
-### <span id="3.2">`Step2: Deploy an Application Layer.`</span>
+### <span id="4.2">`Step2:  Create a Lambda Function to Calculate Transaction Totals and Notify About High Account Balances.`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
-
-1. Same step as network layer but different CloudFormation template.
-
-2. 这个 layer 主要生成一个 SG 和一个 EC2。
+- #### Click here: [BACK TO CONTENT](#4.0)
 
 <p align="center">
-    <img src="../assets/a43.png" width=85%>
+    <img src="../assets/a69.png" width=40%>
 </p>
 
-----------------------------------------------------------
+------------------------------------------------------------------------
 
+1. Configure Lambda function.
 <p align="center">
-    <img src="../assets/a44.png" width=85%>
+    <img src="../assets/a70.png" width=85%>
 </p>
 
-----------------------------------------------------------
+------------------------------------------------------------------------
 
+2. Add Lambda code.
 <p align="center">
-    <img src="../assets/a45.png" width=85%>
+    <img src="../assets/a71.png" width=85%>
 </p>
 
-----------------------------------------------------------
+------------------------------------------------------------------------
 
-3. A CloudFormation stack can also reference values from another CloudFormation stack. For example, here is a portion of the lab-application template that references the lab-network template:
+3. Basic settings.
+<p align="center">
+    <img src="../assets/a72.png" width=85%>
+</p>
 
-    ```yaml
-    WebServerSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-        GroupDescription: Enable HTTP ingress
-        VpcId:
-        Fn::ImportValue:
-            !Sub ${NetworkStackName}-VPCID
-    ```
+------------------------------------------------------------------------
 
-    - The last line uses to the Network Stack Name that you provided ("lab-network") when the stack was created. It then imports the value of lab-network-VPCID from the Outputs of the first stack and inserts the value into the VPC ID field of the security group definition. `The result is that the security group is created in the VPC created by the first stack.`
+4. Add triggers.
+<p align="center">
+    <img src="../assets/a73.png" width=85%>
+</p>
 
-    - 这里的 `NetworkStackName` 需要参考代码里面的 `Parameters`。
+------------------------------------------------------------------------
 
-4. In another example, here is the code that places the Amazon EC2 instance into the correct subnet:
+5. Finished set up.
+<p align="center">
+    <img src="../assets/a74.png" width=85%>
+</p>
 
-    ```yaml
-    SubnetId:
-        Fn::ImportValue:
-        !Sub ${NetworkStackName}-SubnetID
-    ```
-
-    - It takes the Subnet ID from the lab-network stack and uses it in the lab-application stack to launch the instance into the public subnet that created by the first stack.
-
-------------------------------------------------------------
+------------------------------------------------------------------------
 
 #### `Comment:`
-1. 对于这一步来说，最重要的是找出在这个代码中找出跟 network-layer 之间的衔接处。
-2. 具体来说，这段代码就是从 network-layer 获取 VPC ID 然后部署 SG，然后从 network-layer 获取 Subnet ID 然后部署 EC2。
+1. Now whenever the Transactions DynamoDB table is `updated`, this function will calculate each customer’s transaction total and store it in the TransactionTotal DynamoDB table. It the total exceeds $1500, it will send a message to a `Simple Notification Service topic` to notify the customer and your credit collection department.
 
-```diff
-+ 1. lab-network.yaml
-  Outputs:
-  
-  VPC:
-    Description: VPC ID
-    Value: !Ref VPC
-    Export:
-      Name: !Sub '${AWS::StackName}-VPCID'
-  
-  PublicSubnet:
-    Description: The subnet ID to use for public web servers
-    Value: !Ref PublicSubnet
-    Export:
-      Name: !Sub '${AWS::StackName}-SubnetID'
+2. Now you have two lambda function so far.
+<p align="center">
+    <img src="../assets/a75.png" width=85%>
+</p>
 
-+ 2. Define stack name in AWS console: Stack name: lab-network
-    (./assets/a35.png)
+------------------------------------------------------------------------
 
-+ 3. lab-application.yaml
-  Parameters:
+3. `TotalNotifier.py`:
+```py
+# TotalNotifier Lambda function
+#
+# This function is triggered when values are inserted into the Transactions DynamoDB table.
+# Transaction totals are calculated and notifications are sent to SNS if limits are exceeded.
 
-  NetworkStackName:
-    Description: >-
-      Name of an active CloudFormation stack that contains the networking
-      resources, such as the VPC and subnet that will be used in this stack.
-    Type: String
-    MinLength: 1
-    MaxLength: 255
-    AllowedPattern: '^[a-zA-Z][-a-zA-Z0-9]*$'
-    Default: lab-network
+from __future__ import print_function
+import json, boto3
 
-+ 4. lab-application.yaml
-    WebServerSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-        GroupDescription: Enable HTTP ingress
-        VpcId:
-        Fn::ImportValue:
-            !Sub ${NetworkStackName}-VPCID
+# Connect to SNS
+sns = boto3.client('sns')
+alertTopic = 'HighBalanceAlert'
+snsTopicArn = [t['TopicArn'] for t in sns.list_topics()['Topics'] if t['TopicArn'].endswith(':' + alertTopic)][0]
 
-+ 5. lab-application.yaml
-    SubnetId:
-        Fn::ImportValue:
-        !Sub ${NetworkStackName}-SubnetID          
-```
+# Connect to DynamoDB
+dynamodb = boto3.resource('dynamodb')
+transactionTotalTableName = 'TransactionTotal'
+transactionsTotalTable = dynamodb.Table(transactionTotalTableName);
 
-3. lab-application.yaml template:
+# This handler is executed every time the Lambda function is triggered
+def lambda_handler(event, context):
 
-```yaml
-AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  Application Template: Demonstrates how to reference resources from a different stack.
-  This template provisions an EC2 instance in a VPC Subnet provisioned in a different stack.
+  # Show the incoming event in the debug log
+  print("Event received by Lambda function: " + json.dumps(event, indent=2))
 
-# This template creates:
-#   Amazon EC2 instance
-#   Security Group
+  # For each transaction added, calculate the new Transactions Total
+  for record in event['Records']:
+    customerId = record['dynamodb']['NewImage']['CustomerId']['S']
+    transactionAmount = int(record['dynamodb']['NewImage']['TransactionAmount']['N'])
 
-######################
-# Parameters section
-######################
+    # Update the customer's total in the TransactionTotal DynamoDB table
+    response = transactionsTotalTable.update_item(
+      Key={
+        'CustomerId': customerId
+      },
+      UpdateExpression="add accountBalance :val",
+      ExpressionAttributeValues={
+        ':val': transactionAmount
+      },
+      ReturnValues="UPDATED_NEW"
+    )
 
-Parameters:
+    # Retrieve the latest account balance
+    latestAccountBalance = response['Attributes']['accountBalance']
+    print("Latest account balance: " + format(latestAccountBalance))
 
-  NetworkStackName:
-    Description: >-
-      Name of an active CloudFormation stack that contains the networking
-      resources, such as the VPC and subnet that will be used in this stack.
-    Type: String
-    MinLength: 1
-    MaxLength: 255
-    AllowedPattern: '^[a-zA-Z][-a-zA-Z0-9]*$'
-    Default: lab-network
+    # If balance > $1500, send a message to SNS
+    if latestAccountBalance >= 1500:
 
-  AmazonLinuxAMIID:
-    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+      # Construct message to be sent
+      message = '{"customerID": "' + customerId + '", ' + '"accountBalance": "' + str(latestAccountBalance) + '"}'
+      print(message)
 
-######################
-# Resources section
-######################
+      # Send message to SNS
+      sns.publish(
+        TopicArn=snsTopicArn,
+        Message=message,
+        Subject='Warning! Account balance is very high',
+        MessageStructure='raw'
+      )
 
-Resources:
-
-  WebServerInstance:
-    Type: AWS::EC2::Instance
-    Metadata:
-      'AWS::CloudFormation::Init':
-        configSets:
-          All:
-            - ConfigureSampleApp
-        ConfigureSampleApp:
-          packages:
-            yum:
-              httpd: []
-          files:
-            /var/www/html/index.html:
-              content: |
-                <img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation_graphic.png" alt="AWS CloudFormation Logo"/>
-                <h1>Congratulations, you have successfully launched the AWS CloudFormation sample.</h1>
-              mode: 000644
-              owner: apache
-              group: apache
-          services:
-            sysvinit:
-              httpd:
-                enabled: true
-                ensureRunning: true
-    Properties:
-      InstanceType: t2.micro
-      ImageId: !Ref AmazonLinuxAMIID
-      NetworkInterfaces:
-        - GroupSet:
-            - !Ref WebServerSecurityGroup
-          AssociatePublicIpAddress: true
-          DeviceIndex: 0
-          DeleteOnTermination: true
-          SubnetId:
-            Fn::ImportValue:
-              !Sub ${NetworkStackName}-SubnetID
-      Tags:
-        - Key: Name
-          Value: Web Server
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          yum update -y aws-cfn-bootstrap
-          # Install the files and packages from the metadata
-          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource WebServerInstance --configsets All --region ${AWS::Region}
-          # Signal the status from cfn-init
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource WebServerInstance --region ${AWS::Region}
-    CreationPolicy:
-      ResourceSignal:
-        Timeout: PT5M
-
-  DiskVolume:
-    Type: AWS::EC2::Volume
-    Properties:
-      Size: 100
-      AvailabilityZone: !GetAtt WebServerInstance.AvailabilityZone
-      Tags:
-        - Key: Name
-          Value: Web Data
-    DeletionPolicy: Snapshot
-
-  DiskMountPoint:
-    Type: AWS::EC2::VolumeAttachment
-    Properties:
-      InstanceId: !Ref WebServerInstance
-      VolumeId: !Ref DiskVolume
-      Device: /dev/sdh
-
-  WebServerSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Enable HTTP ingress
-      VpcId:
-        Fn::ImportValue:
-          !Sub ${NetworkStackName}-VPCID
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
-          CidrIp: 0.0.0.0/0
-      Tags:
-        - Key: Name
-          Value: Web Server Security Group
-
-######################
-# Outputs section
-######################
-
-Outputs:
-  URL:
-    Description: URL of the sample website
-    Value: !Sub 'http://${WebServerInstance.PublicDnsName}'
+  # Finished!
+  return 'Successfully processed {} records.'.format(len(event['Records']))
 ```
 
 ### <span id="3.3">`Step3: Update a Stack.`</span>

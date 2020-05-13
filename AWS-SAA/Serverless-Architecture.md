@@ -2,7 +2,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-## `Section: CloudFormation.`
+## `Section: Serverless Architecture.`
 
 ### `Summary`: In this documentation, we learn Implementing a Serverless Architecture with AWS Managed Services.
 

@@ -4,49 +4,44 @@
 
 ## `Section: CloudFormation.`
 
-### `Summary`: In this documentation, we learn Automating Infrastructure Deployment with AWS CloudFormation.
+### `Summary`: In this documentation, we learn Implementing a Serverless Architecture with AWS Managed Services.
+
+- Your system will receive a transactions file, automatically load its contents into a database and send notifications. This will be done without using any Amazon EC2 servers.
 
 ### `Check Dependencies:`
 
 ------------------------------------------------------------
 
 #### `本章背景：`
-1. 这一部分的内容是使用 CloudFormation 部署多层网络架构，同时学习更新和删除一个栈（栈就是用 CloudFormation 建立起来的架构）。
+1. 使用到的 AWS 部件：
 
-- 内容：
-    - Use AWS CloudFormation to deploy a VPC networking layer
+<p align="center">
+    <img src="../assets/a61.png" width=85%>
+</p>
 
-    - Use AWS CloudFormation to deploy an application layer that references the networking layer
+2. 整体规划图：
 
-    - Explore templates with AWS CloudFormation Designer
-
-    - Delete a stack that has a Deletion Policy
-
-2. 这其中一个关键点是如何在 CloudFormation 中把 networking layer 和 application layer 自动串联连接。
+<p align="center">
+    <img src="../assets/a62.png" width=85%>
+</p>
 
 - 关键词：
 
 ```diff
-+ Stack name
-
-+ ${AWS::StackName}
-
-+ Parameters
-+ NetworkStackName
-+ ${NetworkStackName}
++ 
 ```
 
 ------------------------------------------------------------
 
-### <span id="3.0">`Brief Contents & codes position`</span>
+### <span id="4.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-- [3.1 Deploy a Networking Layer.](#3.1)
-- [3.2 Deploy an Application Layer.](#3.2)
-- [3.3 Update a Stack.](#3.3)
-- [3.4 Explore Templates with AWS CloudFormation Designer.](#3.4)
-- [3.5 Delete the Stack.](#3.5)
+- [4.1 Deploy a Networking Layer.](#4.1)
+- [4.2 Deploy an Application Layer.](#4.2)
+- [4.3 Update a Stack.](#4.3)
+- [4.4 Explore Templates with AWS CloudFormation Designer.](#4.4)
+- [4.5 Delete the Stack.](#4.5)
 
 ------------------------------------------------------------
 

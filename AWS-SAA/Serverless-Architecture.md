@@ -50,7 +50,7 @@
 - #### Click here: [BACK TO CONTENT](#4.0)
 
 <p align="center">
-    <img src="../assets/a63.png" width=40%>
+    <img src="../assets/a63.png" width=60%>
 </p>
 
 ------------------------------------------------------------------------
@@ -171,7 +171,7 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO CONTENT](#4.0)
 
 <p align="center">
-    <img src="../assets/a69.png" width=40%>
+    <img src="../assets/a69.png" width=60%>
 </p>
 
 ------------------------------------------------------------------------

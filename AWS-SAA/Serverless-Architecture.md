@@ -93,7 +93,7 @@
 #### `Comment:`
 1. Now whenever a file is uploaded to the selected Amazon S3 bucket, this Lambda function will execute. It will read the data from the uploaded file and will store the data it finds into the Customer and Transactions tables in DynamoDB.
 
-2. lambda-function1:
+2. `TransactionProcessor.py`:
 
 ```py
 # TransactionProcessor Lambda function

@@ -37,7 +37,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-- [4.1 Deploy a Networking Layer.](#4.1)
+- [4.1 Create a Lambda Function to Process a Transactions File.](#4.1)
 - [4.2 Deploy an Application Layer.](#4.2)
 - [4.3 Update a Stack.](#4.3)
 - [4.4 Explore Templates with AWS CloudFormation Designer.](#4.4)
@@ -45,79 +45,43 @@
 
 ------------------------------------------------------------
 
-### <span id="3.1">`Step1: Deploy a Networking Layer.`</span>
+### <span id="4.1">`Step1: Create a Lambda Function to Process a Transactions File.`</span>
 
-- #### Click here: [BACK TO CONTENT](#3.0)
+- #### Click here: [BACK TO CONTENT](#4.0)
 
-- Create stack.
 <p align="center">
-    <img src="../assets/a33.png" width=85%>
+    <img src="../assets/a63.png" width=40%>
 </p>
 
-------------------------------------------------------------
+------------------------------------------------------------------------
 
-- Upload a template file.
+1. Congigure Lambda function.
 <p align="center">
-    <img src="../assets/a34.png" width=85%>
+    <img src="../assets/a22.png" width=85%>
 </p>
 
-------------------------------------------------------------
+------------------------------------------------------------------------
 
-- Name the stack.
+2. Add Lambda code.
 <p align="center">
-    <img src="../assets/a35.png" width=85%>
+    <img src="../assets/a23.png" width=85%>
 </p>
 
-------------------------------------------------------------
+------------------------------------------------------------------------
 
-- Tag the resources in your stack.
+3. Add trigger (SNS topic)
 <p align="center">
-    <img src="../assets/a36.png" width=85%>
+    <img src="../assets/a24.png" width=85%>
 </p>
 
-------------------------------------------------------------
+------------------------------------------------------------------------
 
-- Review the configuration.
+4. Finished set up.
 <p align="center">
-    <img src="../assets/a37.png" width=85%>
+    <img src="../assets/a25.png" width=85%>
 </p>
 
-------------------------------------------------------------
-
-- Stack in creating in progress.
-<p align="center">
-    <img src="../assets/a38.png" width=85%>
-</p>
-
-------------------------------------------------------------
-
-- Stack created complete. (Stack info tag)
-<p align="center">
-    <img src="../assets/a39.png" width=85%>
-</p>
-
-------------------------------------------------------------
-
-- Stack created complete. (Event tag)
-<p align="center">
-    <img src="../assets/a40.png" width=85%>
-</p>
-
-------------------------------------------------------------
-
-- Stack created complete. (Resources tag)
-<p align="center">
-    <img src="../assets/a41.png" width=85%>
-</p>
-
-------------------------------------------------------------
-
-- Stack created complete. (Output tag)
-<p align="center">
-    <img src="../assets/a42.png" width=85%>
-</p>
-
-------------------------------------------------------------
+------------------------------------------------------------------------
 
 #### `Comment:`
 1. lab-network.yaml template:

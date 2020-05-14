@@ -204,7 +204,7 @@ def lambda_handler(event, context):
 
 ------------------------------------------------------------------------
 
-5. Finished set up.
+5. Finished setting up.
 <p align="center">
     <img src="../assets/a74.png" width=85%>
 </p>
@@ -214,7 +214,7 @@ def lambda_handler(event, context):
 #### `Comment:`
 1. Now whenever the Transactions DynamoDB table is `updated`, this function will calculate each customer’s transaction total and store it in the TransactionTotal DynamoDB table. It the total exceeds $1500, it will send a message to a `Simple Notification Service topic` to notify the customer and your credit collection department.
 
-2. Now you have two lambda function so far.
+2. Now you have two lambda functions so far.
 <p align="center">
     <img src="../assets/a75.png" width=85%>
 </p>
@@ -468,6 +468,8 @@ def lambda_handler(event, context):
 
 #### `Comment:`
 1. Both messages in SQS queues are same, they are from SNS and created in Lambda function. (`TotalNotifier`)
+
+2. By now you should have received a new email from HighAlert that includes an alert about customer C2’s high account balance. That same message was also sent to your two Simple Queue Service queues, ready to be picked up by another process.
 
 --------------------------------------------------------------------
 

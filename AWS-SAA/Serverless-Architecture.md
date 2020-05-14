@@ -28,9 +28,8 @@
 - 关键词：
 
 ```diff
-+ 
++ 第一个 Lambda function 是用来读取上传文件和分配数据的，第二个是用来计算总和并触发 SNS 的（过程为读取 dynamoDB record 并计算总和后更新表格 transactionsTotal，并附带触发 SNS 条件）。
 ```
-
 ------------------------------------------------------------
 
 ### <span id="4.0">`Brief Contents & codes position`</span>

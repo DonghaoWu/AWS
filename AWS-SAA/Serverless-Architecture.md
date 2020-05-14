@@ -301,14 +301,14 @@ def lambda_handler(event, context):
 </p>
 
 ------------------------------------------------------------------------
-- Create topic
+- Create topic.
 
 <p align="center">
     <img src="../assets/a77.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
-- Create subscription
+- Create subscription.
 <p align="center">
     <img src="../assets/a78.png" width=85%>
 </p>
@@ -331,26 +331,143 @@ def lambda_handler(event, context):
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 
+<p align="center">
+    <img src="../assets/a80.png" width=50%>
+</p>
+
+------------------------------------------------------------------------
+- The first queue. `CustomerNotify`
+
+<p align="center">
+    <img src="../assets/a81.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
+- The second queue. `CreditCollection`
+
+<p align="center">
+    <img src="../assets/a82.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
+
+- Both queues subscribe to SNS Topic.
+
+<p align="center">
+    <img src="../assets/a83.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a84.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
 
 
 #### `Comment:`
-1. 
+1. In this task, you will create two Simple Queue Service (SQS) queues. You will subscribe these queues to the Simple Notification Service (SNS) topic you just created. This setup is known as a `fan-out scenario` because each SNS notification is `sent to multiple subscribers and those subscribers can independently consume messages from their own queue.`
 
-
-
-
-
-
+2. Your two queues are now subscribed to your Simple Notification Service topic. They will automatically receive any messages sent to that topic.
 
 
 ### <span id="4.5">`Step5: Testing the Serverless Architecture by Uploading a Transactions File.`</span>
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 
+1. Upload the Transactions File.
+
+<p align="center">
+    <img src="../assets/a85.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a86.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+2. Check the DynamoDB tables.
+
+<p align="center">
+    <img src="../assets/a87.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a88.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a89.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+3. Check your SQS Queues.
+
+<p align="center">
+    <img src="../assets/a90.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a91.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a92.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a93.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+4. Check your Lambda Functions.
+
+- `TransactionProcessor` function
+<p align="center">
+    <img src="../assets/a94.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+- `TotalNotifier` function
+<p align="center">
+    <img src="../assets/a95.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+5. Check your email.
+
+<p align="center">
+    <img src="../assets/a96.png" width=85%>
+</p>
+
+--------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a97.png" width=85%>
+</p>
+
 --------------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. Both messages in SQS queues are same, they are from SNS and created in Lambda function. (`TotalNotifier`)
 
 --------------------------------------------------------------------
 

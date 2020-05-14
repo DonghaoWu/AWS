@@ -475,3 +475,9 @@ def lambda_handler(event, context):
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
+
+
+--------------------------------------------------------------------
+<p align="center">
+    <img src="../assets/a62.png" width=85%>
+</p>

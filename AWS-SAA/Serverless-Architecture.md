@@ -296,9 +296,34 @@ def lambda_handler(event, context):
 
 - #### Click here: [BACK TO CONTENT](#4.0)
 
+<p align="center">
+    <img src="../assets/a76.png" width=85%>
+</p>
 
+------------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a77.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a78.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/a79.png" width=85%>
+</p>
+
+------------------------------------------------------------------------
 #### `Comment:`
-1. 
+1. You can also subscribe to receive a message on your phone via SMS.
+```diff
++ For Protocol, select SMS
+```
 
 
 

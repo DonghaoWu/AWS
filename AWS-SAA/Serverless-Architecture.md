@@ -327,6 +327,8 @@ def lambda_handler(event, context):
 + For Protocol, select SMS
 ```
 
+2. 使用 Lambda trigger 其他服务不是通过 AWS console。
+
 ### <span id="4.4">`Step4: Create Two Simple Queue Service Queues.`</span>
 
 - #### Click here: [BACK TO CONTENT](#4.0)
@@ -370,6 +372,8 @@ def lambda_handler(event, context):
 1. In this task, you will create two Simple Queue Service (SQS) queues. You will subscribe these queues to the Simple Notification Service (SNS) topic you just created. This setup is known as a `fan-out scenario` because each SNS notification is `sent to multiple subscribers and those subscribers can independently consume messages from their own queue.`
 
 2. Your two queues are now subscribed to your Simple Notification Service topic. They will automatically receive any messages sent to that topic.
+
+3. 目前来说 SNS topic 一共有 3个 subscribers。
 
 
 ### <span id="4.5">`Step5: Testing the Serverless Architecture by Uploading a Transactions File.`</span>
@@ -467,7 +471,7 @@ def lambda_handler(event, context):
 --------------------------------------------------------------------
 
 #### `Comment:`
-1. Both messages in SQS queues are same, they are from SNS and created in Lambda function. (`TotalNotifier`)
+1. Both messages in SQS queues are same, they are from SNS and created by Lambda function. (`TotalNotifier`)
 
 2. By now you should have received a new email from HighAlert that includes an alert about customer C2’s high account balance. That same message was also sent to your two Simple Queue Service queues, ready to be picked up by another process.
 

@@ -223,7 +223,7 @@ def lambda_handler(event, context):
 
 
 ```diff
-+ S3 new file uploaded -> Lambda TransactionProcessor -> DynamoDB table updated -> Lambda TotalNotifier
++ S3 new file uploaded -> Lambda TransactionProcessor -> DynamoDB table (Transaction) updated -> Lambda TotalNotifier -> SNS
 ```
 
 3. `TotalNotifier.py`:

@@ -297,23 +297,25 @@ def lambda_handler(event, context):
 - #### Click here: [BACK TO CONTENT](#4.0)
 
 <p align="center">
-    <img src="../assets/a76.png" width=85%>
+    <img src="../assets/a76.png" width=50%>
 </p>
 
 ------------------------------------------------------------------------
+- Create topic
 
 <p align="center">
     <img src="../assets/a77.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
-
+- Create subscription
 <p align="center">
     <img src="../assets/a78.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
+- Finished.
 <p align="center">
     <img src="../assets/a79.png" width=85%>
 </p>
@@ -324,10 +326,6 @@ def lambda_handler(event, context):
 ```diff
 + For Protocol, select SMS
 ```
-
-
-
-
 
 ### <span id="4.4">`Step4: Create Two Simple Queue Service Queues.`</span>
 

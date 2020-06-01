@@ -6,4 +6,6 @@
 
 - [Part3 - Automating Infrastructure Deployment with AWS CloudFormation](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/CloudFormation.md)
 
-- [Part4 - Implementing a Serverless Architecture with AWS Managed Services](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/Serverless-Architecture.md)  
+- [Part4 - Implementing a Serverless Architecture with AWS Managed Services](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/Serverless-Architecture.md) 
+
+- [Part5 - Introduction to Amazon CloudFront](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/5.CloudFront-distribution.md)   

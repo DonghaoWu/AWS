@@ -8,4 +8,6 @@
 
 - [Part4 - Implementing a Serverless Architecture with AWS Managed Services](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/Serverless-Architecture.md) 
 
-- [Part5 - Introduction to Amazon CloudFront](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/5.CloudFront-distribution.md)   
+- [Part5 - Introduction to Amazon CloudFront](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/5.CloudFront-distribution.md)
+
+- [Part6 - Multi-region failover with Amazon Route 53](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/6.Multi-Region%20Failover(Route%2053).md) 

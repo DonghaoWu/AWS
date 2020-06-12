@@ -11,3 +11,5 @@
 - [Part5 - Introduction to Amazon CloudFront](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/5.CloudFront-distribution.md)
 
 - [Part6 - Multi-region failover with Amazon Route 53](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/6.Multi-Region%20Failover(Route%2053).md) 
+
+- [Part7 - Implement a serverless application.](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/6.Multi-Region%20Failover(Route%2053).md) 

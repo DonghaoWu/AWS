@@ -2,7 +2,7 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-- #### Click here: [Go to repo sample](https://github.com/aws-samples/aws-serverless-workshop-innovator-island)
+- #### Click here: [GO TO REPO SAMPLE](https://github.com/aws-samples/aws-serverless-workshop-innovator-island)
 
 ## `Section: Implement a serverless application.`
 

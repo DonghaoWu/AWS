@@ -80,17 +80,17 @@
 #### `Comment:`
 1. cloud9 可以执行 github 的下载 repo 命令。
 2. cloud9 可以执行 yum 安装，如
-```bash
-sudo yum install jq -y
-```
+    ```bash
+    sudo yum install jq -y
+    ```
 3. Amplify 使用 cloudFront 支持服务，而不需要服务器。
 4. 在这个 workshop 中，front-end 代码在 S3，backend 代码在 github。
 5. AWS CodeCommit 也使用类似 git 的命令，如
-```bash
-$ cd ~/environment/theme-park-frontend/
-$ AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/\(.*\)[a-z]/\1/')
-$ git push --set-upstream https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/theme-park-frontend master
-```
+    ```bash
+    $ cd ~/environment/theme-park-frontend/
+    $ AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/\(.*\)[a-z]/\1/')
+    $ git push --set-upstream https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/theme-park-frontend master
+    ```
 
 ### <span id="7.2">`Step2: Front-end and Back-end.`</span>
 

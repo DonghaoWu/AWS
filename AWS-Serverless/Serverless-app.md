@@ -13,7 +13,7 @@
 ------------------------------------------------------------
 
 #### `本章背景：`
-1. 这一部分的内容是要求在已经建立好的简单 VPC 基础上添加 ASG, SNS, Lambda, CloudWatch 从而使整个系统的 `持续可用能力` 提高。
+1. 
 
 - 整体规划图：
 
@@ -29,15 +29,7 @@
 
 ------------------------------------------------------------
 
-2. 引用服务先后顺序：
-
-```diff
-+ ASG add new EC2 -> SNS topic -> Trigger Lambda function -> Create EBS snapshot  + Send info to CloudWatch
-```
-
-3. 在实验过程中有一个疑惑的地方，就是 Lambda 生成了一个 snapshot ，但是有两个新的 volume 。（5月8日更正，原本有2个 volume，生成后也有两个 snapshot。）
-
-4. __`一个很重要的点，本章中生成新的 EC2 使用的是 ASG 服务，生成 EC2 对应的 snapshot 使用的是 Lambda 服务，SNS 服务负责调用 Lambda，Lambda 同时还调用了 CloudWatch，而 IAM 赋予 Lambda 权限。`__
+2. 
 
 - 设计 HA 整体的步骤是：
 
@@ -51,26 +43,26 @@
 
 ------------------------------------------------------------
 
-### <span id="2.0">`Brief Contents & codes position`</span>
+### <span id="7.0">`Brief Contents & codes position`</span>
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-- [2.1 Create an SNS Topic.](#2.1)
-- [2.2 Configure Auto Scaling to Send Events.](#2.2)
-- [2.3 An IAM Role for the Lambda function.](#2.3)
-- [2.4 Create a Lambda Function.](#2.4)
-- [2.5 Scale-Out the Auto Scaling Group to Trigger the Lambda function.](#2.5)
-- [2.6 Result.](#2.6)
+- [7.1 Introduction to related services.](#7.1)
+- [7.2 Configure Auto Scaling to Send Events.](#7.2)
+- [7.3 An IAM Role for the Lambda function.](#7.3)
+- [7.4 Create a Lambda Function.](#7.4)
+- [7.5 Scale-Out the Auto Scaling Group to Trigger the Lambda function.](#7.5)
+- [7.6 Result.](#7.6)
 
 ------------------------------------------------------------
 
-### <span id="2.1">`Step1: Create an SNS Topic.`</span>
+### <span id="7.1">`Step1: Introduction to related services.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
-<p align="center">
-    <img src="../assets/a18.png" width=85%>
-</p>
+**:star: AWS Cloud9 IDE
+
+[AWS Cloud9](https://aws.amazon.com/cloud9/) is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop. Your Cloud9 environment will have access to the same AWS resources as the user with which you logged into the AWS Management Console.
 
 ------------------------------------------------------------
 

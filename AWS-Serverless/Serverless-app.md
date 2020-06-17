@@ -18,7 +18,7 @@
 - 整体规划图：
 
 <p align="center">
-    <img src="../assets/a17.png" width=85%>
+    <img src="../assets/ap7-01.png" width=85%>
 </p>
 
 ------------------------------------------------------------

@@ -42,7 +42,7 @@
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
 - [7.1 Introduction to related services.](#7.1)
-- [7.2 Configure Auto Scaling to Send Events.](#7.2)
+- [7.2 Front-end and Back-end.](#7.2)
 - [7.3 An IAM Role for the Lambda function.](#7.3)
 - [7.4 Create a Lambda Function.](#7.4)
 - [7.5 Scale-Out the Auto Scaling Group to Trigger the Lambda function.](#7.5)
@@ -63,27 +63,55 @@
     ```zsh
     # Verify that your user is logged in by running the command aws sts get-caller-identity
     aws sts get-caller-identity
-
-    
     ```
+
+    :star: AWS CodeCommit(How it works - Frontend)
+    - You will create a code repository in AWS CodeCommit.
+    - You will download the existing frontend code into your Cloud9 IDE and push the code to this repository.
+    - You will configure Amplify Console to connect to your repository and publish the web app.
+
+    :star: AWS Amplify
+    - All of your static web content including HTML, CSS, JavaScript, images and other files will be managed by AWS Amplify Console and served via Amazon CloudFront.
+
+    - Your end users will then access your site using the public website URL exposed by AWS Amplify Console. You don't need to run any web servers or use other services in order to make your site available.
 
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 名词：SNS Topic
+1. cloud9 可以执行 github 的下载 repo 命令。
+2. cloud9 可以执行 yum 安装，如
+```bash
+sudo yum install jq -y
+```
+3. Amplify 使用 cloudFront 支持服务，而不需要服务器。
+4. 在这个 workshop 中，front-end 代码在 S3，backend 代码在 github。
+5. AWS CodeCommit 也使用类似 git 的命令，如
+```bash
+$ cd ~/environment/theme-park-frontend/
+$ AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/\(.*\)[a-z]/\1/')
+$ git push --set-upstream https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/theme-park-frontend master
+```
 
-### <span id="2.2">`Step2: Configure Auto Scaling to Send Events.`</span>
+### <span id="7.2">`Step2: Front-end and Back-end.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
 <p align="center">
-    <img src="../assets/a19.png" width=85%>
+    <img src="../assets/ap7-03.png" width=85%>
+</p>
+
+------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/ap7-04.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 #### `Comment:`
 1. 
+
+
 
 ### <span id="2.3">`Step3: An IAM Role for the Lambda function.`</span>
 

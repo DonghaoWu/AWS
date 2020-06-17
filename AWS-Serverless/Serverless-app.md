@@ -1,4 +1,4 @@
-# AWS solution architect (Part 7)
+# AWS serverless services (Part 7)
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 

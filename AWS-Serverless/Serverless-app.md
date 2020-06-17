@@ -65,6 +65,21 @@
 
     - Your end users will then access your site using the public website URL exposed by AWS Amplify Console. You don't need to run any web servers or use other services in order to make your site available.
 
+    :star: AWS DynamoDB `(backend)`
+    - A DynamoDB table which you will populate with information about all the rides and attractions throughout the park.
+    
+    - DynamoDB is a key-value and document database which we will use to store information about all the rides and attractions throughout the park.
+
+    :star: AWS Lambda function `(backend)`
+    - A Lambda function which performs a table scan on the DynamoDB to return all the items.
+
+    :star: AWS API Gateway `(backend)`
+    - `An API Gateway API creates a public http endpoint for the front-end application to query. This invokes the Lambda function to return a list of rides and attractions.`
+
+    :star: AWS SAM - Serverless Application Model
+    - SAM is an open-source framework that makes it easier to deploy serverless infrastructure.
+    - This allows you to specify your application requirements in code and SAM transforms and `expands the SAM syntax into AWS CloudFormation` to deploy your application. 
+
 ------------------------------------------------------------
 
 #### `Comment:`
@@ -81,6 +96,25 @@
     $ AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/\(.*\)[a-z]/\1/')
     $ git push --set-upstream https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/theme-park-frontend master
     ```
+6. SAM 有自己的 CLI 去 deploy。
+7. SAM 的作用相当于 cloudFormation。
+8. 往数据库导入数据叫做：`Populate the DynamoDB Table`，如命令：
+```bash
+node ./importData.js $AWS_REGION $DDB_TABLE
+```
+9. SAM 生成 API Gateway endpoint URL 的查询：
+
+```console
+aws cloudformation describe-stacks --stack-name theme-park-backend --query "Stacks[0].Outputs[?OutputKey=='InitStateApi'].OutputValue" --output text
+```
+
+10. 有了这个 endpoint. You have now created a public API that your frontend application can use to populate the map with points of interest.
+
+11. 当 front-end 修改后，执行以下命令，从而驱动 Amplify 自动重新部署：
+```bash
+git commit -am "your comment"
+git push
+```
 
 ### <span id="7.2">`Step2: Front-end and Back-end.`</span>
 
@@ -99,8 +133,7 @@
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 
-
+1. 前端跟后端是利用一个 API endpoint URI 串联起来，而这个 URI 实际上是调用一个 Lambda 函数去读取 DynamoDB 中的数据。
 
 
 ### <span id="2.3">`Step3: An IAM Role for the Lambda function.`</span>

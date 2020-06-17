@@ -60,12 +60,12 @@
 
     :key: Cloud9 key command:
 
-    ```bash
-    # Verify that your user is logged in by running the command aws sts get-caller-identity
-    aws sts get-caller-identity
+        ```console
+        # Verify that your user is logged in by running the command aws sts get-caller-identity
+        aws sts get-caller-identity
 
-    
-    ```
+        
+        ```
 
 ------------------------------------------------------------
 

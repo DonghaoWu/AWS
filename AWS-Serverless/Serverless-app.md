@@ -29,16 +29,10 @@
 
 ------------------------------------------------------------
 
-2. 
-
-- 设计 HA 整体的步骤是：
+2.
 
 ```diff
-+ ASG
-+ SNS
-+ IAM Role
-+ Lambda
-+ CloudWatch
+
 ```
 
 ------------------------------------------------------------
@@ -60,7 +54,7 @@
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-**:star: AWS Cloud9 IDE
+:star: AWS Cloud9 IDE
 
 [AWS Cloud9](https://aws.amazon.com/cloud9/) is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes pre-packaged with essential tools for popular programming languages and the AWS Command Line Interface (CLI) pre-installed so you don’t need to install files or configure your laptop for this workshop. Your Cloud9 environment will have access to the same AWS resources as the user with which you logged into the AWS Management Console.
 

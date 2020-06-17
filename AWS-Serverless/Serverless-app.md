@@ -85,13 +85,13 @@
 #### `Comment:`
 1. cloud9 可以执行 github 的下载 repo 命令。
 2. cloud9 可以执行 yum 安装，如
-    ```bash
+    ```console
     sudo yum install jq -y
     ```
 3. Amplify 使用 cloudFront 支持服务，而不需要服务器。
 4. 在这个 workshop 中，front-end 代码在 S3，backend 代码在 github。
 5. AWS CodeCommit 也使用类似 git 的命令，如
-    ```bash
+    ```console
     $ cd ~/environment/theme-park-frontend/
     $ AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/\(.*\)[a-z]/\1/')
     $ git push --set-upstream https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/theme-park-frontend master
@@ -106,7 +106,7 @@
     ```
 7. SAM 的作用相当于 cloudFormation。
 8. 往数据库导入数据叫做：`Populate the DynamoDB Table`，如命令：
-    ```bash
+    ```console
     node ./importData.js $AWS_REGION $DDB_TABLE
     ```
 9. SAM 生成 API Gateway endpoint URL 的查询：
@@ -118,7 +118,7 @@
 10. 有了这个 endpoint. You have now created a public API that your frontend application can use to populate the map with points of interest.
 
 11. 当 front-end 修改后，执行以下命令，从而驱动 Amplify 自动重新部署：
-    ```bash
+    ```console
     git commit -am "your comment"
     git push
     ```

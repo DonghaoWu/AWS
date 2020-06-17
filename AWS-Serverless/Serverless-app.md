@@ -140,7 +140,7 @@
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 前端跟后端是利用一个 API endpoint URI 串联起来，而这个 URI 实际上是调用一个 Lambda 函数去读取 DynamoDB 中的数据。
+1. 前端跟后端是利用一个 API endpoint URL 串联起来，而这个 URL 实际上是调用一个 Lambda 函数去读取 DynamoDB 中的数据。
 
 
 ### <span id="2.3">`Step3: An IAM Role for the Lambda function.`</span>

@@ -2,9 +2,11 @@
 
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
 
-## `Section: Making Your Environment Highly Available - part2`
+- #### Click here: [Go to repo sample](https://github.com/aws-samples/aws-serverless-workshop-innovator-island)
 
-### `Summary`: In this documentation, we learn using notifications to trigger AWS Lambda.
+## `Section: Implement a serverless application.`
+
+### `Summary`: In this documentation, we learn using general aws service to implement a serverless app.
 
 ### `Check Dependencies:`
 

@@ -13,3 +13,4 @@
 - [Part6 - Multi-region failover with Amazon Route 53](https://github.com/DonghaoWu/AWS/blob/master/AWS-SAA/6.Multi-Region%20Failover(Route%2053).md) 
 
 - [Part7 - Implement a serverless application.](https://github.com/DonghaoWu/AWS/blob/master/AWS-Serverless/Serverless-app.md) 
+

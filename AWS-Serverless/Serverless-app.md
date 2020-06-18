@@ -35,7 +35,7 @@
 - [7.2 Front-end and Back-end.](#7.2)
 - [7.3 Real-Time Serverless Backend.](#7.3)
 - [7.4 On-ride photo processing.](#7.4)
-- [7.5 Scale-Out the Auto Scaling Group to Trigger the Lambda function.](#7.5)
+- [7.5 Language translation.](#7.5)
 - [7.6 Result.](#7.6)
 
 ------------------------------------------------------------
@@ -84,7 +84,7 @@
 
     :star: AWS Cognito
 
-    :star: AWS IoT endpoint
+    :star: AWS IoT endpoint :+1:
 
 ------------------------------------------------------------
 
@@ -191,104 +191,48 @@
 - #### Click here: [BACK TO CONTENT](#7.0)
 
 <p align="center">
-    <img src="../assets/a21.png" width=40%>
+    <img src="../assets/ap-06.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
 
-1. Configure Lambda function.
-<p align="center">
-    <img src="../assets/a22.png" width=85%>
-</p>
+- 设计路径：
+    1. S3 Event Type : `theme-park-backend-uploadbucket` All object create events ---> Lambda trigger
+    2. Lambda: Add layer to function, add environment variables
+    3. S3: store the output object
 
-------------------------------------------------------------------------
+    4. 使用 SAM 部署第二阶段：Lambda, IAM policy to S3
+    5. S3 Event Type : `theme-park-backend-processingbucket` All object create events ---> Lambda trigger
 
-2. Add Lambda code.
-<p align="center">
-    <img src="../assets/a23.png" width=85%>
-</p>
+    6. S3 Event Type : `theme-park-backend-uploadbucket` All object create events ---> Lambda trigger
+    7. DynaomoDB: Save the image info for query.
+    8. IoT topic: notify the frontend to update.
 
-------------------------------------------------------------------------
-
-3. Add trigger (SNS topic)
-<p align="center">
-    <img src="../assets/a24.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-4. Finished set up.
-<p align="center">
-    <img src="../assets/a25.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
 
 #### `Comment:`
-1. Lambda function code (runtime: python 2.7)
+1. 本部分使用到3个 S3 bucket，分别是：
+    - theme-park-backend-uploadbucket
+    - theme-park-backend-processingbucket
+    - theme-park-backend-finalbucket
 
-```py
-# Snap_and_Tag Lambda function
-#
-# This function is triggered when Auto Scaling launches a new instance.
-# A snapshot of EBS volumes will be created and a tag will be added.
+2. 本部分使用到3个 Lambda function，分别是：
+    - theme-park-photos-chromakey
+    - theme-park-photos-CompositeFunction
+    - theme-park-photos-postprocess
 
-from __future__ import print_function
+3. The final Lambda function in the photo processing pipeline is triggered when the final image is rendered and saved into the S3 finalbucket. It will save the photo object information into DynamoDB and send a message to the IoT topic so the frontend application is notified.
 
-import json, boto3
+4. 在这一步中还提到在第一步 deploy backend 时生成的 uploads API。
+    ```console
+    aws cloudformation describe-stacks --stack-name theme-park-backend --query "Stacks[0].Outputs[?OutputKey=='UploadApi'].OutputValue" --output text
+    ```
 
-def lambda_handler(event, context):
-    print("Received event: " + json.dumps(event, indent=2))
+### <span id="7.5">`Step5: Language translation.`</span>
 
-    # Extract the EC2 instance ID from the Auto Scaling event notification
-    message = event['Records'][0]['Sns']['Message']
-    autoscalingInfo = json.loads(message)
-    ec2InstanceId = autoscalingInfo['EC2InstanceId']
-
-    # Snapshot all EBS volumes attached to the instance
-    ec2 = boto3.resource('ec2')
-    for v in ec2.volumes.filter(Filters=[{'Name': 'attachment.instance-id', 'Values': [ec2InstanceId]}]):
-        description = 'Autosnap-%s-%s' % ( ec2InstanceId, v.volume_id )
-
-        if v.create_snapshot(Description = description):
-            print("\t\tSnapshot created with description [%s]" % description)
-
-    # Add a tag to the EC2 instance: Key = Snapshots, Value = Created
-    ec2 = boto3.client('ec2')
-    response = ec2.create_tags(
-        Resources=[ec2InstanceId],
-        Tags=[{'Key': 'Snapshots', 'Value': 'Created'}]
-    )
-    print ("***Tag added to EC2 instance with id: " + ec2InstanceId)
-
-    # Finished!
-    return ec2InstanceId
-```
-
-2. Examine the code. It is performing the following steps:
-
-    - Extract the EC2 instance ID from the notification message
-    - Create a snapshot of all EBS volumes attached to the instance
-    - Add a tag to the instance to indicate that snapshots were created
-
-### <span id="2.5">`Step5: Scale-Out the Auto Scaling Group to Trigger the Lambda function.`</span>
-
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
 <p align="center">
     <img src="../assets/a26.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-<p align="center">
-    <img src="../assets/a27.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-<p align="center">
-    <img src="../assets/a32.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
@@ -307,35 +251,10 @@ def lambda_handler(event, context):
 
 ------------------------------------------------------------------------
 
-2. `The new EC2 has a new tag from Lambda Function.`
-<p align="center">
-    <img src="../assets/a29.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-3. Two new snapshots created at a same time.
-<p align="center">
-    <img src="../assets/a30.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
-4. 查看原来的 EC2 附带的 Volumes，上面一共有两个，说明 Lambda 运行成功。
-<p align="center">
-    <img src="../assets/a31.png" width=85%>
-</p>
-
-------------------------------------------------------------------------
-
 #### `Comment:`
 1. 
 
 ------------------------------------------------------------------------
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 - #### Click here: [BACK TO NAVIGASTION](https://github.com/DonghaoWu/AWS/blob/master/README.md)
-
-<p align="center">
-    <img src="../assets/a16.png" width=85%>
-</p>

@@ -33,8 +33,8 @@
 
 - [7.1 Introduction to related services.](#7.1)
 - [7.2 Front-end and Back-end.](#7.2)
-- [7.3 An IAM Role for the Lambda function.](#7.3)
-- [7.4 Create a Lambda Function.](#7.4)
+- [7.3 Real-Time Serverless Backend.](#7.3)
+- [7.4 On-ride photo processing.](#7.4)
 - [7.5 Scale-Out the Auto Scaling Group to Trigger the Lambda function.](#7.5)
 - [7.6 Result.](#7.6)
 
@@ -80,6 +80,12 @@
     - SAM is an open-source framework that makes it easier to deploy serverless infrastructure.
     - This allows you to specify your application requirements in code and SAM transforms and `expands the SAM syntax into AWS CloudFormation` to deploy your application. 
 
+    :star: SNS Topic
+
+    :star: AWS Cognito
+
+    :star: AWS IoT endpoint
+
 ------------------------------------------------------------
 
 #### `Comment:`
@@ -105,7 +111,7 @@
     sam deploy --template-file packaged.yaml --stack-name theme-park-backend --capabilities CAPABILITY_IAM
     ```
 7. SAM 的作用相当于 cloudFormation。
-8. 往数据库导入数据叫做：`Populate the DynamoDB Table`，如命令：
+8. 把现成数据往数据库导入叫做：`Populate the DynamoDB Table`，如命令：
     ```console
     node ./importData.js $AWS_REGION $DDB_TABLE
     ```
@@ -122,6 +128,8 @@
     git commit -am "your comment"
     git push
     ```
+
+12. 目前三者的关系是，在 cloud9 完成编码，然后将代码 push 到 codeCommit 中，最后 Amplify 连接 codeCommit，每当 codeCommit 的代码发生更换时，Amplify 就会自动 deploy。
 
 ### <span id="7.2">`Step2: Front-end and Back-end.`</span>
 
@@ -142,23 +150,45 @@
 #### `Comment:`
 1. 前端跟后端是利用一个 API endpoint URL 串联起来，而这个 URL 实际上是调用一个 Lambda 函数去读取 DynamoDB 中的数据。
 
+2. 目前获得：
+    1. Created a code repository in Cloud9 and configured Amplify Console to publish the web app in this repository. You now have a public URL endpoint for your application.（`Cloud9, Amplify, codeCommit`）
+    2. Deployed the backend infrastructure for the theme park and application.（`SAM, Lambda, DynamoDB, API Gateway`）
+    3. Populated a DynamoDB table containing ride and attraction information for the park.（`DynamoDB`）
+    4. Tested the deployment by using the CLI to scan the DynamoDB table, and using curl to test the API Gateway endpoint（`API Gateway`）
+    5. Updated the front-end with this new API endpoint and saw the results in the application.(`codeCommit, Amplify`)
+    6. Pushed code changes (in the form of a configuration update) to CodeCommit, and saw how Amplify Console automatically detected the new commit and published the changes to the public frontend.（`Cloud9, codeCommit, Amplify`）
 
-### <span id="2.3">`Step3: An IAM Role for the Lambda function.`</span>
+
+### <span id="7.3">`Step3: Real-Time Serverless Backend.`</span>
 
 - #### Click here: [BACK TO CONTENT](#2.0)
 
 <p align="center">
-    <img src="../assets/a20.png" width=85%>
+    <img src="../assets/ap7-05.png" width=85%>
 </p>
 
 ------------------------------------------------------------
 
 #### `Comment:`
-1. 名词：IAM Role policy，这里设置的 `policy: SnapAndTagRole` 会应用在第四步 `Lambda role` 设置中。
+- 概括：SNS 侦听外部资源，从而 SNS topic 调用Lambda，Lambda 一方面更新 DynamoDB，另一方面把信息传送到 IoT 端口，在前端侦听到 IoT topic 后更新显示信息。
 
-### <span id="2.4">`Step4: Create a Lambda Function.`</span>
+1. 过程分析：设计一个 Lambda function， trigger 是一个 SNS topic。
+    - This Lambda function code reads the latest message from the SNS topic, writes it to `DynamoDB` and then pushes the message to the frontend application `via an IoT topic`.
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+2. 在这个模块中学会：
+    1. Connected your backend application with the Flow & Traffic Controller's SNS topic.`(SNS topic)`
+    2. Created a Lambda function that was invoked by the SNS topic whenever a new message is published.`(Lambda, SNS topic)`
+    3. Set up IAM permissions so your Lambda function could write this message to the application's DynamoDB table, and publish the message to the IoT topic for the front end.`(IAM, Lambda, DynamoDB, IoT topic)`
+    4. Updated the frontend with the configuration information so `it can listen to new messages on the IoT topic.（这一部没有详细交代是前端怎样侦听的）`
+
+3. 关于 SNS topic 是怎样被调用的：
+    - The Flow & Traffic Controller exists in a separate AWS account owned by the theme park. You are provided with the SNS topic ARN to use.`(更新的游客信息等都是通过另外一个账号的开放资料提供)`。
+
+4. 个人觉得现在一共有两个 DynamoDB table，一个记录游客信息，一个记录实时行程？`(思考)`。
+
+### <span id="7.4">`Step4: On-ride photo processing.`</span>
+
+- #### Click here: [BACK TO CONTENT](#7.0)
 
 <p align="center">
     <img src="../assets/a21.png" width=40%>

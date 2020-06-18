@@ -176,7 +176,7 @@
 
 ### <span id="7.3">`Step3: Real-Time Serverless Backend.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
 <p align="center">
     <img src="../assets/ap7-05.png" width=85%>

@@ -86,6 +86,13 @@
 
     :star: AWS IoT endpoint :+1:
 
+    :star: Amazon Kinesis Firehose
+    - Every tap from a wristband creates an IoT message routed to the Amazon Kinesis Firehose delivery stream.
+    - All messages are sent to the Kinesis Firehose delivery stream. This ingests large numbers of messages and stores the result in Amazon S3.
+    - Amazon Kinesis Data Firehose is a fully managed service that reliably loads streaming data into data lakes, data stores and analytics tools. It can capture, transform, and load streaming data into Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, and Splunk, enabling near real-time analytics with existing business intelligence tools like Amazon QuickSight.
+
+    - It automatically scales to match the throughput of your data and requires no ongoing administration. You can configure a delivery stream and start sending data from hundreds of thousands of data sources to be loaded continuously to AWS – all in just a few minutes.
+
 ------------------------------------------------------------
 
 #### `Comment:`
@@ -191,7 +198,7 @@
 - #### Click here: [BACK TO CONTENT](#7.0)
 
 <p align="center">
-    <img src="../assets/ap-06.png" width=85%>
+    <img src="../assets/ap7-06.png" width=85%>
 </p>
 
 ------------------------------------------------------------------------
@@ -231,28 +238,43 @@
 
 - #### Click here: [BACK TO CONTENT](#7.0)
 
-<p align="center">
-    <img src="../assets/a26.png" width=85%>
-</p>
+- 设计思路：
+    - The front-end application uses a local languages resource file to substitute language strings when the locale is changed.
+    - You will download this file and use a Node function that uses Amazon Translate to create a new file with a range of translations.
+    - After the new language file is created, you will copy it into the frontend code and republish through Amplify Console. `(替换旧repo 中的语言文件 translation.json)`
 
 ------------------------------------------------------------------------
 
 #### `Comment:`
-1. 如上图修改 `Desired capacity` 之后 ASG 就会自动启动一个新的 EC2。
+1. 这一步跟很多软件的本地语言功能差不多，它这里的差别是上传英语版本，然后通过 Amazon translate 翻译成多个版本返回 json 文件，不需要依赖实时翻译。
 
-### <span id="2.6">`Step6: Result.`</span>
+### <span id="7.6">`Step6: Analyzing visitor stats.`</span>
 
-- #### Click here: [BACK TO CONTENT](#2.0)
+- #### Click here: [BACK TO CONTENT](#7.0)
 
-1. Lambda Function code.
 <p align="center">
-    <img src="../assets/a28.png" width=95%>
+    <img src="../assets/ap7-07.png" width=95%>
 </p>
 
-------------------------------------------------------------------------
+---------------------------------------------------------------------
+
+- 运作：
+    1. The wristbands emit messages through the IoT infrastructure. These are sent to Kinesis Firehose.
+    2. Firehose aggegrates data into objects stored in a dedicated S3 bucket.
+    3. QuickSight uses the objects in the S3 bucket as a data source for analysis.
+
+----------------------------------------------------------------------
 
 #### `Comment:`
-1. 
+1. 原理：
+    - Each park visitor has a wristband that collects data throughout the day. It records when visitors arrive and leave, and keeps track of every ride they visit.
+
+    - When participants exit each ride, they tap the wristband on a ratings collection device. This leaves a rating from 1 (bad) to 5 (great). The wristband also transmits information about the visitor's name, age and home location.
+
+    - 腕带信息包括出入景点信息，还有沿途状况，景点评分，游客姓名年龄和地址。
+    - Kinesis 需要设置 Destination，在这里是 S3，同时需要设置 IAM Role。
+
+2. :question:`目前剩下的疑问是，simulator application 跟 Kinesis 之间是怎样连接起来的？`
 
 ------------------------------------------------------------------------
 

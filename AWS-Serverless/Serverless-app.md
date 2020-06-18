@@ -151,12 +151,12 @@
 1. 前端跟后端是利用一个 API endpoint URL 串联起来，而这个 URL 实际上是调用一个 Lambda 函数去读取 DynamoDB 中的数据。
 
 2. 目前获得：
-    1. Created a code repository in Cloud9 and configured Amplify Console to publish the web app in this repository. You now have a public URL endpoint for your application.（`Cloud9, Amplify, codeCommit`）
-    2. Deployed the backend infrastructure for the theme park and application.（`SAM, Lambda, DynamoDB, API Gateway`）
-    3. Populated a DynamoDB table containing ride and attraction information for the park.（`DynamoDB`）
-    4. Tested the deployment by using the CLI to scan the DynamoDB table, and using curl to test the API Gateway endpoint（`API Gateway`）
-    5. Updated the front-end with this new API endpoint and saw the results in the application.(`codeCommit, Amplify`)
-    6. Pushed code changes (in the form of a configuration update) to CodeCommit, and saw how Amplify Console automatically detected the new commit and published the changes to the public frontend.（`Cloud9, codeCommit, Amplify`）
+    1. Created a code repository in Cloud9 and configured Amplify Console to publish the web app in this repository. You now have a public URL endpoint for your application. :zap:（`Cloud9, Amplify, codeCommit`）
+    2. Deployed the backend infrastructure for the theme park and application. :zap:（`SAM, Lambda, DynamoDB, API Gateway`）
+    3. Populated a DynamoDB table containing ride and attraction information for the park.:zap:（`DynamoDB`）
+    4. Tested the deployment by using the CLI to scan the DynamoDB table, and using curl to test the API Gateway endpoint :zap:（`API Gateway`）
+    5. Updated the front-end with this new API endpoint and saw the results in the application. :zap: (`codeCommit, Amplify`)
+    6. Pushed code changes (in the form of a configuration update) to CodeCommit, and saw how Amplify Console automatically detected the new commit and published the changes to the public frontend. :zap:（`Cloud9, codeCommit, Amplify`）
 
 
 ### <span id="7.3">`Step3: Real-Time Serverless Backend.`</span>
@@ -176,15 +176,15 @@
     - This Lambda function code reads the latest message from the SNS topic, writes it to `DynamoDB` and then pushes the message to the frontend application `via an IoT topic`.
 
 2. 在这个模块中学会：
-    1. Connected your backend application with the Flow & Traffic Controller's SNS topic.`(SNS topic)`
-    2. Created a Lambda function that was invoked by the SNS topic whenever a new message is published.`(Lambda, SNS topic)`
-    3. Set up IAM permissions so your Lambda function could write this message to the application's DynamoDB table, and publish the message to the IoT topic for the front end.`(IAM, Lambda, DynamoDB, IoT topic)`
+    1. Connected your backend application with the Flow & Traffic Controller's SNS topic. :zap: `(SNS topic)`
+    2. Created a Lambda function that was invoked by the SNS topic whenever a new message is published. :zap: `(Lambda, SNS topic)`
+    3. Set up IAM permissions so your Lambda function could write this message to the application's DynamoDB table, and publish the message to the IoT topic for the front end. :zap: `(IAM, Lambda, DynamoDB, IoT topic)`
     4. Updated the frontend with the configuration information so `it can listen to new messages on the IoT topic.（这一部没有详细交代是前端怎样侦听的）`
 
 3. 关于 SNS topic 是怎样被调用的：
     - The Flow & Traffic Controller exists in a separate AWS account owned by the theme park. You are provided with the SNS topic ARN to use.`(更新的游客信息等都是通过另外一个账号的开放资料提供)`。
 
-4. 个人觉得现在一共有两个 DynamoDB table，一个记录游客信息，一个记录实时行程？`(思考)`。
+4. 个人觉得现在一共有两个 DynamoDB table，一个记录游客信息，一个记录实时行程？ :zap: `(思考)`。
 
 ### <span id="7.4">`Step4: On-ride photo processing.`</span>
 

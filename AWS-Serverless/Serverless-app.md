@@ -191,7 +191,7 @@
 3. 关于 SNS topic 是怎样被调用的：
     - The Flow & Traffic Controller exists in a separate AWS account owned by the theme park. You are provided with the SNS topic ARN to use.`(更新的游客信息等都是通过另外一个账号的开放资料提供)`。
 
-4. 个人觉得现在一共有两个 DynamoDB table，一个记录游客信息，一个记录实时行程？ :sunny: `(思考)`。
+4. :question:个人觉得现在一共有两个 DynamoDB table，一个记录游客信息，一个记录实时行程？。
 
 ### <span id="7.4">`Step4: On-ride photo processing.`</span>
 

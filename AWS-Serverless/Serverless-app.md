@@ -36,7 +36,8 @@
 - [7.3 Real-Time Serverless Backend.](#7.3)
 - [7.4 On-ride photo processing.](#7.4)
 - [7.5 Language translation.](#7.5)
-- [7.6 Result.](#7.6)
+- [7.6 Analyzing visitor stats.](#7.6)
+- [7.7 Developing event-based architecture.](#7.7)
 
 ------------------------------------------------------------
 
@@ -92,6 +93,13 @@
     - Amazon Kinesis Data Firehose is a fully managed service that reliably loads streaming data into data lakes, data stores and analytics tools. It can capture, transform, and load streaming data into Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, and Splunk, enabling near real-time analytics with existing business intelligence tools like Amazon QuickSight.
 
     - It automatically scales to match the throughput of your data and requires no ongoing administration. You can configure a delivery stream and start sending data from hundreds of thousands of data sources to be loaded continuously to AWS – all in just a few minutes.
+
+    :star: AWS QuickSight
+    - 这里的 QuickSight 从 S3 引入文件数据，进行可视化分析。
+
+    :star: AWS EventBridge
+
+    :star: AWS CloudWatch metrics
 
 ------------------------------------------------------------
 
@@ -246,7 +254,7 @@
 ------------------------------------------------------------------------
 
 #### `Comment:`
-1. 这一步跟很多软件的本地语言功能差不多，它这里的差别是上传英语版本，然后通过 Amazon translate 翻译成多个版本返回 json 文件，不需要依赖实时翻译。
+1. 这一步跟很多软件的本地语言功能差不多，它这里的差别是上传英语版本，然后通过 Amazon translate 翻译成多个版本返回 json 文件，不是通过实时翻译。
 
 ### <span id="7.6">`Step6: Analyzing visitor stats.`</span>
 
@@ -275,6 +283,51 @@
     - Kinesis 需要设置 Destination，在这里是 S3，同时需要设置 IAM Role。
 
 2. :question:`目前剩下的疑问是，simulator application 跟 Kinesis 之间是怎样连接起来的？`
+
+------------------------------------------------------------------------
+
+### <span id="7.7">`Step7: Developing event-based architecture.`</span>
+
+- #### Click here: [BACK TO CONTENT](#7.0)
+
+- In this module, you are going to build new functionality that allows the park's maintenance teams to get alerts from the ride systems.
+
+<p align="center">
+    <img src="../assets/ap7-08.png" width=95%>
+</p>
+
+------------------------------------------------------------------------
+
+<p align="center">
+    <img src="../assets/ap7-09.png" width=95%>
+</p>
+
+------------------------------------------------------------------------
+
+- 设计组件：
+    1. A Lambda function can push data from the SNS topic to EventBridge. This helps decouple the producers and consumers of events, so if there are any more "new requirements" later, it will be easy to address these without impacting existing systems.
+
+    2. EventBridge uses rules to filter incoming events and decided where they should be routed. You will be using rules to filter a subset of events to each of three services you need to build.
+
+    3. The Flow & Traffic Controller is a separate system in the park. You are provided with the SNS topic ARN to use.
+
+    4. The Lambda function receive new messages from the SNS topic. It parses this message and sends events to the EventBridge event bus.
+
+    5. EventBridge receives these events and uses rules to decide where they should be routed.
+
+    6. Events are routed to any number of downstream consumers, which are completely decoupled from the event producers.
+
+------------------------------------------------------------------------
+
+#### `Comment:`
+1. 需要注意的是，这里应用的外部数据跟第一部分的 Flow & Traffic Controller 是一样的。在选择 SNS topic 时都是选择 `theme-park-ride-FATcontroller-...`
+2. 生成的 Lambda function，作用为将 SNS topic 数据发送至 Amazon EventBridge。这个 Lambda 的生成是通过 SAM。
+3. 在这一步中，关于下面的步骤没有详细描述：
+    - EventBridge will now filter events on the default bus and send events matching the pattern to the Lambda function that populates CloudWatch metrics.
+4. CloudWatch 收到数据之后，还要通过配置才能在创建一个 dashboard 进行监控。
+5. 在 EventBridge 的设计 rule 的思路是，设定好是否是事件驱动型，然后选择 target， target 就是发生符合 rule 的事件时调用哪些资源。在本模块中选择了 Lambda function， CloudWatch log group。`EventBridge will now filter events on the default bus and send events matching the pattern to the Lambda function and a CloudWatch log group.`
+6. 设定 SNS topic 向用户发送 email 或者 SMS，而在这一步 SNS topic 就是作为 EventBridge 的 target， EventBridge 将符合的 event 数据激发 SNS topic 并传递到它里面，SNS topic 通过 confirm 的 subscription 向用户发送 email。
+7. 同理也可以通过 EventBridge， SNS topic， SMS subscription 建立向用户发送 SMS 信息的系统。
 
 ------------------------------------------------------------------------
 

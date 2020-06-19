@@ -310,13 +310,13 @@
 - In this module, you are going to build new functionality that allows the park's maintenance teams to get alerts from the ride systems.
 
 <p align="center">
-    <img src="../assets/ap7-08.png" width=95%>
+    <img src="../assets/ap7-08.png" width=90%>
 </p>
 
 ------------------------------------------------------------------------
 
 <p align="center">
-    <img src="../assets/ap7-09.png" width=95%>
+    <img src="../assets/ap7-09.png" width=90%>
 </p>
 
 ------------------------------------------------------------------------

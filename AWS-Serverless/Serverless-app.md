@@ -23,19 +23,19 @@
 
 2. 关键数据接口：
     1. front-end & backend : 
-    front-end <- API Gateway <- Lambda <- DynamoDB
+        - front-end <- API Gateway <- Lambda <- DynamoDB
 
     2. Real-Time backend : 
-    front-end <- IoT topic <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
+        - front-end <- IoT topic <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
 
     3. On-ride photo : 
-    front-end <- IoT topic <- Lambda <- final S3 <- Lambda <- processing S3 <- Lambda <- origin S3 <- Lambda <- API Gateway
+        - front-end <- IoT topic <- Lambda <- final S3 <- Lambda <- processing S3 <- Lambda <- origin S3 <- Lambda <- API Gateway
 
     4. Analyzing visitor stats: 
-    Amazon QuickSight <- S3 <- Amazon Kinesis Data Firehose <- Visitor wristbands (simulator application)
+        - Amazon QuickSight <- S3 <- Amazon Kinesis Data Firehose <- Visitor wristbands (simulator application)
 
     5. Event-based architecture:
-     __`subscription`__(Email, SMS) <- __`target`__(Lambda function，CloudWatch log group, SNS topic)<- rules <- EventBridge event bus <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
+        - __`subscription`__(Email, SMS) <- __`target`__(Lambda function，CloudWatch log group, SNS topic)<- rules <- EventBridge event bus <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
 
 3. 应用到的 AWS 服务。
 <p align="center">

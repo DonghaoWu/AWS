@@ -30,7 +30,7 @@
 
     4. Analyzing visitor stats: Amazon QuickSight <- S3 <- Amazon Kinesis Data Firehose <- Visitor wristbands (simulator application)
 
-    5. Event-based architecture: (Email, SMS) <- (Lambda function， CloudWatch log group, SNS topic)<- rules <- EventBridge event bus <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
+    5. Event-based architecture: __`subscription`__(Email, SMS) <- __`target`__(Lambda function，CloudWatch log group, SNS topic)<- rules <- EventBridge event bus <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
 
 3. 应用到的 AWS 服务。
 <p align="center">

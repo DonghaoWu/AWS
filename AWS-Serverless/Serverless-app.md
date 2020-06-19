@@ -346,12 +346,12 @@
 
 4. CloudWatch 收到数据之后，还要通过配置才能在创建一个 dashboard 进行监控。
 
-5. 在 EventBridge 的设计 rule 的思路是，设定好是否是事件驱动型，然后选择 target， target 就是发生符合 rule 的事件时调用哪些资源。在本模块中选择了  :star2: Lambda function， CloudWatch log group, SNS topic。
+5. 在 EventBridge 的设计 rule 的思路是，设定好是否是事件驱动型，然后选择 target， target 就是发生符合 rule 的事件时调用哪些资源。在本模块中选择了  :star2: Lambda function，CloudWatch log group, SNS topic。
     - `EventBridge will now filter events on the default bus and send events matching the pattern to the Lambda function and a CloudWatch log group.`
 
 6. 设定 SNS topic 向用户发送 email 或者 SMS，而在这一步 SNS topic 就是作为 EventBridge 的 target， EventBridge 将符合的 event 数据激发 SNS topic 并传递到它里面，SNS topic 通过 confirm 的 subscription 向用户发送 email。
 
-7. 同理也可以通过 EventBridge， SNS topic， SMS subscription 建立向用户发送 SMS 信息的系统。
+7. 同理也可以通过 `EventBridge + SNS topic + SMS subscription` 建立向用户发送 SMS 信息的系统。
 ------------------------------------------------------------------------
 
 - #### Click here: [BACK TO CONTENT](#7.0)

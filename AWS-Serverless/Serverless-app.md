@@ -6,7 +6,7 @@
 
 ## `Section: Implement a serverless application.`
 
-### `Summary`: In this documentation, we learn using general aws service to implement a serverless app.
+### `Summary`: In this documentation, we learn using general aws services to implement a serverless app.
 
 ### `Check Dependencies:`
 
@@ -21,6 +21,18 @@
 
 ------------------------------------------------------------
 
+2. 关键数据接口：
+    1. front-end & backend : front-end <- API Gateway <- Lambda <- DynamoDB
+
+    2. Real-Time backend : front-end <- IoT topic <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
+
+    3. On-ride photo : front-end <- IoT topic <- Lambda <- final S3 <- Lambda <- processing S3 <- Lambda <- origin S3 <- Lambda <- API Gateway
+
+    4. Analyzing visitor stats: Amazon QuickSight <- S3 <- Amazon Kinesis Data Firehose <- Visitor wristbands (simulator application)
+
+    5. Event-based architecture: (Email, SMS) <- (Lambda function， CloudWatch log group, SNS topic)<- rules <- EventBridge event bus <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
+
+3. 应用到的 AWS 服务。
 <p align="center">
     <img src="../assets/ap7-02.png" width=85%>
 </p>

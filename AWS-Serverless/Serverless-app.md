@@ -29,7 +29,7 @@
         - front-end <- IoT topic <- Lambda <- Flow & Traffic Controller's SNS topic <- seperate AWS account
 
     3. On-ride photo : 
-        - front-end <- IoT topic <- Lambda <- final S3 <- Lambda <- processing S3 <- Lambda <- origin S3 <- Lambda <- API Gateway
+        - front-end <- IoT topic <- Lambda <- final S3 <- Lambda <- processing S3 <- Lambda <- origin S3 <- Lambda <- API Gateway <- Upload photo
 
     4. Analyzing visitor stats: 
         - Amazon QuickSight <- S3 <- Amazon Kinesis Data Firehose <- Visitor wristbands (simulator application)
